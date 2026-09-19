@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Feedback | FitTrack{% endblock %}
+{% block page_title %}Feedback{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+	<div class="col-xl-8 col-lg-10">
+		<div class="card border-0 shadow-sm overflow-hidden">
+			<div class="card-header bg-primary text-white p-4">
+				<div class="d-flex align-items-center gap-3">
+					<i class="bi bi-chat-square-text-fill fs-2"></i>
+					<div><h2 class="h5 mb-1">Share your feedback</h2><p class="mb-0 text-white-50">Help us make your fitness experience better.</p></div>
+				</div>
+			</div>
+			<div class="card-body p-4">
+				<div class="alert alert-light border"><i class="bi bi-info-circle text-primary me-2"></i>Your feedback helps us improve the Fitness Tracker for everyone.</div>
+				<label class="form-label" for="feedback-message">Your message</label>
+				<textarea id="feedback-message" class="form-control mb-3" rows="5" placeholder="Tell us what you think..."></textarea>
+				<a href="mailto:fitnesstracker@example.com?subject=Fitness%20Tracker%20Feedback" class="btn btn-primary"><i class="bi bi-send me-1"></i> Send feedback</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

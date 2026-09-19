@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Notifications | FitTrack{% endblock %}
+{% block page_title %}Notifications{% endblock %}
+{% block content %}
+<div class="row g-4">
+	<div class="col-lg-8">
+		<div class="card border-0 shadow-sm">
+			<div class="card-header bg-white d-flex justify-content-between align-items-center">
+				<div>
+					<h2 class="h5 mb-1">Notifications</h2>
+					<p class="mb-0 text-secondary">Stay updated with your Fitness Tracker activity.</p>
+				</div>
+				<i class="bi bi-bell-fill text-primary fs-3"></i>
+			</div>
+			<div class="list-group list-group-flush">
+				<div class="list-group-item py-3">
+					<div class="d-flex gap-3">
+						<i class="bi bi-check-circle-fill text-success fs-4"></i>
+						<div><h3 class="h6 mb-1">Welcome to Fitness Tracker</h3><p class="mb-0">Your personal fitness dashboard is ready.</p></div>
+					</div>
+				</div>
+				<div class="list-group-item py-3">
+					<div class="d-flex gap-3">
+						<i class="bi bi-lightning-charge-fill text-warning fs-4"></i>
+						<div><h3 class="h6 mb-1">Keep your progress going</h3><p class="mb-0">Log your workouts, water and weight regularly.</p></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="card border-0 shadow-sm h-100">
+			<div class="card-body text-center d-flex flex-column justify-content-center">
+				<i class="bi bi-calendar-check text-primary fs-1 mb-3"></i>
+				<h2 class="h5">Stay consistent</h2>
+				<p class="text-secondary">Small daily actions create lasting results.</p>
+				<a href="{% url 'reports:dashboard' %}" class="btn btn-primary mt-2">View reports</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

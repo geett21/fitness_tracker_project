@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block page_title %}Goal{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8"><div class="card border-0 shadow-sm"><div class="card-header bg-primary text-white"><h3 class="mb-0">Save Goal</h3></div><div class="card-body"><form method="post">{% csrf_token %}{{ form.non_field_errors }}<div class="mb-3"><label class="form-label">Goal type</label>{{ form.goal_type }}{{ form.goal_type.errors }}</div><div class="mb-3"><label class="form-label">Target weight (kg)</label>{{ form.target_weight }}{{ form.target_weight.errors }}</div><div class="row"><div class="col-md-6 mb-3"><label class="form-label">Start date</label>{{ form.start_date }}</div><div class="col-md-6 mb-3"><label class="form-label">End date</label>{{ form.end_date }}</div></div><button class="btn btn-primary" type="submit">Save goal</button><a href="{% url 'goal_list' %}" class="btn btn-outline-secondary">Cancel</a></form></div></div></div></div>
+{% endblock %}

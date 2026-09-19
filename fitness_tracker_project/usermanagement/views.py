@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
-from .forms import RegisterForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Q
+from .forms import RegisterForm, UserUpdateForm
 from .models import User
 
 
@@ -16,8 +18,9 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, "usermanagement/register.html", {
-        "form": form
+    return render(request, "usermanagement/user_form.html", {
+        "form": form,
+        "is_registration": True,
     })
 
 
@@ -25,26 +28,49 @@ def register(request):
 # LOGIN
 # ==========================
 def login_view(request):
+    next_url = request.GET.get("next", "") or request.POST.get("next", "")
+
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
 
+        username = (username or "").strip()
         user = authenticate(request, username=username, password=password)
+
+        if user is None and username and password:
+            candidate = User.objects.filter(
+                Q(username__iexact=username) | Q(first_name__iexact=username),
+                is_active=True,
+            ).first()
+            if candidate and candidate.check_password(password):
+                if not candidate.username and candidate.first_name:
+                    candidate.username = candidate.first_name.strip()
+                    candidate.save(update_fields=["username"])
+                user = candidate
 
         if user is not None:
             login(request, user)
-            return redirect("dashboard")
+            return redirect(next_url or "dashboard")
         else:
-            return render(request, "usermanagement/login.html", {
-                "error_message": "Invalid username or password."
+            return render(request, "login.html", {
+                "error_message": "Invalid username or password.",
+                "next": next_url,
             })
 
-    return render(request, "usermanagement/login.html")
+    return render(request, "login.html", {
+        "next": next_url,
+    })
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("login")
 
 
 # ==========================
 # READ (List Users)
 # ==========================
+@user_passes_test(lambda user: user.is_staff)
 def user_list(request):
     users = User.objects.all()
     return render(request, "usermanagement/user_list.html", {
@@ -70,15 +96,16 @@ def user_create(request):
         "form": form
     })
 
-
-# ==========================
-# UPDATE (Edit User)
-# ==========================
+@login_required
 def user_update(request, id):
+
     user = get_object_or_404(User, id=id)
+    if user != request.user and not request.user.is_staff:
+        return redirect("profile")
 
     if request.method == "POST":
-        form = RegisterForm(
+
+        form = UserUpdateForm(
             request.POST,
             request.FILES,
             instance=user
@@ -86,16 +113,18 @@ def user_update(request, id):
 
         if form.is_valid():
             form.save()
-            return redirect("user_list")
+            return redirect("profile")
 
     else:
-        form = RegisterForm(instance=user)
 
-    return render(request, "usermanagement/user_form.html", {
-        "form": form
-    })
+        form = UserUpdateForm(instance=user)
 
 
+    return render(request,
+                  "usermanagement/user_form.html",
+                  {
+                    "form": form
+                  })
 # ==========================
 # DELETE (Delete User)
 # ==========================
@@ -112,3 +141,26 @@ def user_delete(request, id):
 
 def base(request):
     return render(request, "base.html")
+
+@login_required
+def profile(request):
+    return render(request, "usermanagement/profile.html", {
+        "user": request.user
+    })
+
+
+@login_required
+def notifications_page(request):
+    return render(request, "usermanagement/notifications.html")
+
+
+@login_required
+def feedback_page(request):
+    return render(request, "usermanagement/feedback.html")
+
+
+@login_required
+def settings_page(request):
+    return render(request, "usermanagement/settings.html")
+def home(request):
+    return redirect("dashboard")

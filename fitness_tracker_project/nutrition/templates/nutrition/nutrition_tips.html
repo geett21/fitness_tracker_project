@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block page_title %}Nutrition Tips{% endblock %}
+
+{% block extra_css %}
+<style>
+  .nutrition-copy {
+    color: #344054 !important;
+    opacity: 1 !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+  <a href="{% url 'nutrition_home' %}" class="btn btn-outline-secondary">
+    <i class="bi bi-arrow-left me-1"></i>
+    Back to Nutrition
+  </a>
+</div>
+
+<div class="card border-0 shadow-sm mb-4 overflow-hidden">
+  <div class="card-body p-4 text-white" style="background: linear-gradient(120deg, #f08c00, #fcc419);">
+    <div class="row align-items-center">
+      <div class="col-md-9">
+        <p class="text-uppercase fw-semibold mb-2">Healthy habits</p>
+        <h2 class="fw-bold mb-1">Small choices, lasting results.</h2>
+        <p class="mb-0">Practical nutrition ideas you can use every day.</p>
+      </div>
+      <div class="col-md-3 text-md-end mt-3 mt-md-0"><i class="bi bi-lightbulb-fill" style="font-size:4rem;"></i></div>
+    </div>
+  </div>
+</div>
+<div class="row g-4">
+  {% for tip in tips %}
+  <div class="col-md-6 col-xl-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body p-4">
+        <div class="bg-success-subtle text-success rounded-circle d-inline-flex p-3 mb-3"><i
+            class="bi {% if tip.icon %}{{ tip.icon }}{% else %}bi-check2-circle{% endif %} fs-4"></i></div>
+        <h4>{{ tip.title }}</h4>
+        <p class="nutrition-copy mb-0">{{ tip.description }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

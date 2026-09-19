@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block page_title %}Macro Tracker{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+  <a href="{% url 'nutrition_home' %}" class="btn btn-outline-secondary">
+    <i class="bi bi-arrow-left me-1"></i>
+    Back to Nutrition
+  </a>
+</div>
+
+<div class="container-fluid">
+  <div class="card border-0 shadow-sm">
+    <div class="card-header border-0 p-4 text-white" style="background: linear-gradient(120deg, #1864ab, #4dabf7);"><div class="d-flex align-items-center gap-3"><i class="bi bi-bar-chart-line-fill fs-2"></i><div><h3 class="mb-1">Today's macro balance</h3><p class="mb-0 text-white-50">Based on the foods you logged today.</p></div></div></div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4 mb-3"><div class="card bg-success text-white"><div class="card-body text-center"><h5>Protein</h5><h2>{{ protein }} g</h2><p class="mb-0">Daily goal: 120 g</p></div></div></div>
+        <div class="col-md-4 mb-3"><div class="card bg-warning"><div class="card-body text-center"><h5>Carbohydrates</h5><h2>{{ carbs }} g</h2><p class="mb-0">Daily goal: 250 g</p></div></div></div>
+        <div class="col-md-4 mb-3"><div class="card bg-danger text-white"><div class="card-body text-center"><h5>Fats</h5><h2>{{ fats }} g</h2><p class="mb-0">Daily goal: 60 g</p></div></div></div>
+      </div>
+      <h4>Today's Macro Summary</h4>
+      <table class="table table-bordered"><thead><tr><th>Macro</th><th>Consumed</th><th>Goal</th></tr></thead><tbody><tr><td>Protein</td><td>{{ protein }} g</td><td>120 g</td></tr><tr><td>Carbs</td><td>{{ carbs }} g</td><td>250 g</td></tr><tr><td>Fats</td><td>{{ fats }} g</td><td>60 g</td></tr></tbody></table>
+    </div>
+  </div>
+</div>
+{% endblock %}

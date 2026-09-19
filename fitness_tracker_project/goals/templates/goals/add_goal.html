@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+        <h2 class="mb-0">
+            🎯 Add New Goal
+        </h2>
+    </div>
+
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Goal Type
+                        </label>
+
+                        {{ form.goal_type }}
+
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Target Weight (kg)
+                        </label>
+
+                        {{ form.target_weight }}
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-md-6">
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Start Date
+                        </label>
+
+                        {{ form.start_date }}
+
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            End Date
+                        </label>
+
+                        {{ form.end_date }}
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">
+                💾 Save Goal
+            </button>
+
+
+            <a href="{% url 'goal_list' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

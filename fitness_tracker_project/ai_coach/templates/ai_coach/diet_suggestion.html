@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}Diet Suggestions | FitTrack{% endblock %}
+{% block page_title %}Diet Suggestions{% endblock %}
+
+{% block extra_css %}
+<style>
+  .diet-hero {
+    background: linear-gradient(135deg, #087f5b 0%, #20c997 55%, #74c69d 100%);
+    color: white;
+    border-radius: .75rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diet-hero::after {
+    content: "🥗";
+    position: absolute;
+    right: 2rem;
+    bottom: -.75rem;
+    font-size: 5rem;
+    opacity: .22;
+  }
+
+  .diet-card {
+    border: 1px solid #e4eaf2;
+    border-radius: .85rem;
+    height: 100%;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .2s ease;
+    position: relative;
+  }
+
+  .diet-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .75rem 1.5rem rgba(16, 24, 40, .12) !important;
+  }
+
+  .diet-card h3 {
+    color: #172554;
+  }
+
+  .plan-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .35rem .7rem;
+    border-radius: 2rem;
+    font-size: .78rem;
+    font-weight: 700;
+    color: #172554;
+    background: #ecfdf3;
+  }
+
+  .diet-copy,
+  .diet-card li,
+  .diet-card p {
+    color: #344054;
+  }
+
+  .meal-row {
+    border-bottom: 1px solid #e4eaf2;
+    padding: .8rem 0;
+    line-height: 1.55;
+  }
+
+  .meal-row strong {
+    display: inline-block;
+    color: #087f5b;
+    font-size: .82rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    margin-bottom: .15rem;
+  }
+
+  .meal-row:last-child {
+    border-bottom: 0;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="diet-hero p-4 mb-4 shadow-sm">
+  <p class="text-uppercase small fw-semibold mb-2">AI Coach nutrition guide</p>
+  <h2 class="mb-2">Choose a plan that fits your goal</h2>
+  <p class="mb-0">Use these serving ideas as a starting point and adjust them to your needs, activity, and medical advice.</p>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="diet-card bg-white p-4 shadow-sm">
+      <span class="plan-badge">🥗 Everyday energy</span>
+      <h3 class="h4 mt-3"><i class="bi bi-bullseye text-success me-2"></i>Balanced daily plan</h3>
+      <p class="diet-copy">A practical everyday option for general fitness and steady energy.</p>
+      <div class="meal-row"><strong>Breakfast</strong><br>Oats 50 g + milk 250 ml + banana 1 medium + almonds 10</div>
+      <div class="meal-row"><strong>Mid-morning snack</strong><br>Apple 1 medium or any seasonal fruit 150 g</div>
+      <div class="meal-row"><strong>Lunch</strong><br>Rice 1 cup cooked or 2 chapatis + dal 1 cup + paneer 100 g + salad 1 bowl</div>
+      <div class="meal-row"><strong>Evening snack</strong><br>Curd 150 g or roasted chana 30 g + unsweetened tea</div>
+      <div class="meal-row"><strong>Dinner</strong><br>2 chapatis + mixed vegetables 1.5 cups + curd 100 g</div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="diet-card bg-white p-4 shadow-sm">
+      <span class="plan-badge" style="background: #eff6ff;">🔥 Lean & steady</span>
+      <h3 class="h4 mt-3"><i class="bi bi-graph-down-arrow text-primary me-2"></i>Weight-loss plan</h3>
+      <p class="diet-copy">High-fiber, protein-focused meals with controlled portions.</p>
+      <div class="meal-row"><strong>Breakfast</strong><br>2 eggs or paneer 100 g + 1 slice whole-grain toast + vegetables</div>
+      <div class="meal-row"><strong>Snack</strong><br>Guava 1 medium or cucumber/carrot sticks 1 bowl</div>
+      <div class="meal-row"><strong>Lunch</strong><br>2 chapatis + grilled chicken 120 g or tofu 150 g + salad 2 cups</div>
+      <div class="meal-row"><strong>Evening snack</strong><br>Buttermilk 250 ml or roasted makhana 25 g</div>
+      <div class="meal-row"><strong>Dinner</strong><br>Soup 1 bowl + fish/chicken 120 g or paneer/tofu 150 g + vegetables 1 cup</div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="diet-card bg-white p-4 shadow-sm">
+      <span class="plan-badge" style="background: #fff7ed;">💪 Training fuel</span>
+      <h3 class="h4 mt-3"><i class="bi bi-lightning-charge text-warning me-2"></i>Muscle-gain plan</h3>
+      <p class="diet-copy">Add protein and energy around training while keeping meals balanced.</p>
+      <div class="meal-row"><strong>Breakfast</strong><br>3 eggs or paneer 150 g + oats 60 g + fruit 1 serving</div>
+      <div class="meal-row"><strong>Post-workout</strong><br>Milk 300 ml + banana 1 + peanut butter 1 tablespoon</div>
+      <div class="meal-row"><strong>Lunch</strong><br>Rice 1.5 cups cooked + chicken 150 g or rajma 1 cup + vegetables 1 bowl</div>
+      <div class="meal-row"><strong>Snack</strong><br>Greek yogurt/curd 200 g + nuts 20 g</div>
+      <div class="meal-row"><strong>Dinner</strong><br>3 chapatis + fish/chicken 150 g or tofu 180 g + vegetables 1 cup</div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="diet-card bg-white p-4 shadow-sm">
+      <span class="plan-badge" style="background: #f0fdf4;">🌱 Plant-powered</span>
+      <h3 class="h4 mt-3"><i class="bi bi-flower1 text-success me-2"></i>Vegetarian options</h3>
+      <p class="diet-copy">Mix and match these vegetarian protein-rich choices.</p>
+      <ul class="mb-0">
+        <li class="mb-2">Paneer: 100-150 g per meal</li>
+        <li class="mb-2">Tofu: 150-200 g per meal</li>
+        <li class="mb-2">Dal or rajma: 1-1.5 cups cooked</li>
+        <li class="mb-2">Curd or Greek yogurt: 150-200 g</li>
+        <li class="mb-2">Soy chunks: 40-50 g dry weight</li>
+        <li>Chana or sprouts: 1 cup cooked</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="diet-card bg-white p-4 shadow-sm">
+      <span class="plan-badge" style="background: #fff1f2;">🤰 Gentle guidance</span>
+      <h3 class="h4 mt-3"><i class="bi bi-heart-pulse text-danger me-2"></i>Pregnancy-friendly general guidance</h3>
+      <p class="diet-copy">Choose gentle, nourishing meals and eat smaller portions more often if needed.</p>
+      <div class="row g-3">
+        <div class="col-md-4"><strong>Breakfast</strong><br><span class="diet-copy">Poha/upma 1 cup + milk 1 glass + fruit 1 serving</span></div>
+        <div class="col-md-4"><strong>Lunch</strong><br><span class="diet-copy">2 chapatis + dal 1 cup + vegetables 1 cup + curd 1 small bowl</span></div>
+        <div class="col-md-4"><strong>Snack</strong><br><span class="diet-copy">Fruit 1 serving + nuts 10-15 or roasted chana 25 g</span></div>
+      </div>
+      <div class="alert alert-warning mt-3 mb-0">Pregnancy nutrition must be personalized by your doctor or registered dietitian. Avoid unpasteurized foods and any food your clinician has restricted; do not follow calorie-reduction plans during pregnancy without medical advice.</div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-info mt-4 shadow-sm"><i class="bi bi-droplet me-2"></i>💧 Aim for regular water intake through the day and follow your healthcare professional's advice for your personal needs.</div>
+{% endblock %}

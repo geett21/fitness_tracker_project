@@ -6,7 +6,7 @@ class User(AbstractUser):
 
     phone = models.CharField(max_length=15)
 
-    address = models.TextField(blank=True)
+    
 
     profile_image = models.ImageField(
         upload_to="profiles/",

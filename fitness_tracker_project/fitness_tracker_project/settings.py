@@ -10,10 +10,29 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def _load_env_file():
+    env_file = BASE_DIR / '.env'
+    if not env_file.exists():
+        return
+
+    for line in env_file.read_text(encoding='utf-8').splitlines():
+        line = line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+        key, value = line.split('=', 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        os.environ.setdefault(key, value)
+
+
+_load_env_file()
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +44,8 @@ SECRET_KEY = 'django-insecure-k==h9i@bp(xf*#a%xejl1&nfj_5$#bsk_-*2#hc(*7547it$u0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Local hosts are required for development and Django's built-in test client.
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
 
 
 # Application definition
@@ -39,7 +59,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'adminlte',
     'usermanagement',
-    ]
+    'goals',
+    'water',
+    'dashboard',
+    'weight',
+    'workout',
+    'nutrition',
+    'progress',
+    'ai_coach',
+    'reports',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,8 +85,13 @@ ROOT_URLCONF = 'fitness_tracker_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
+
         'APP_DIRS': True,
+
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
@@ -116,11 +150,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
 STATIC_URL = "static/"
-
- 
 STATICFILES_DIRS = [
-    BASE_DIR /"fitness_tracker_project"/ "static",
+    BASE_DIR / "fitness_tracker_project" / "static",
 ]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 AUTH_USER_MODEL = "usermanagement.User"
+LOGIN_URL = "login"
+
+# Keep API credentials outside source control. Load them from a local .env file
+# if present, and fall back to the shell environment otherwise.
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
+OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o-mini").strip()
+
+# Avoid using placeholder values accidentally.
+if (
+    not OPENAI_API_KEY
+    or OPENAI_API_KEY.lower().startswith("your_")
+    or OPENAI_API_KEY.lower().startswith("sk-your")
+):
+    OPENAI_API_KEY = ""

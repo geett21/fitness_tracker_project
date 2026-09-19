@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block page_title %}Meal Plans{% endblock %}
+
+{% block extra_css %}
+<style>
+  .nutrition-copy {
+    color: #344054 !important;
+    opacity: 1 !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+  <a href="{% url 'nutrition_home' %}" class="btn btn-outline-secondary">
+    <i class="bi bi-arrow-left me-1"></i>
+    Back to Nutrition
+  </a>
+</div>
+
+<div class="card border-0 shadow-sm mb-4 overflow-hidden">
+  <div class="card-body p-4 p-md-5 text-white" style="background:#0f766e;">
+    <p class="text-uppercase fw-semibold text-white-50 mb-2">Simple meal ideas</p>
+    <h2 class="fw-bold">Choose a plan that fits your goal.</h2>
+    <p class="mb-0 text-white-50">Use these as flexible inspiration and adjust portions to suit your calorie needs and
+      preferences.</p>
+  </div>
+</div>
+
+<div class="row g-4">
+  {% for plan in plans %}
+  <div class="col-xl-6">
+    <div class="card h-100 border-0 shadow-sm overflow-hidden">
+      <div class="card-header border-0 pt-4 px-4 text-white" style="background: {{ plan.color }};">
+        <span class="badge mb-2" style="background: rgba(255, 255, 255, .2);">{{ plan.tag }}</span>
+        <h3 class="h4 mb-0">{{ plan.name }}</h3>
+      </div>
+      <div class="card-body px-4">
+        {% for meal in plan.meals %}
+        <div class="meal-row d-flex gap-3 {% if not forloop.last %}mb-3{% endif %}">
+          <i class="bi {{ meal.icon }} fs-4 meal-icon"></i>
+          <div>
+            <h6 class="mb-1">{{ meal.type }}</h6>
+            <p class="nutrition-copy mb-0">{{ meal.items }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="card-footer border-0 px-4 pb-4"><a href="{% url 'food_diary' %}" class="btn w-100 text-white"
+          style="background:#0f766e;">Start logging meals</a></div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

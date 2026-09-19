@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block page_title %}Workout Plans{% endblock %}
+
+{% block extra_css %}
+<style>
+  .workout-plan-copy {
+    color: #344054 !important;
+    opacity: 1 !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-sm mb-4 overflow-hidden">
+  <div class="card-body p-4 p-md-5 text-white" style="background: linear-gradient(120deg, #6366f1, #06b6d4);">
+    <p class="text-uppercase fw-semibold text-white-50 mb-2">Train with purpose</p>
+    <h2 class="fw-bold">Workout plans for every goal.</h2>
+    <p class="mb-0 text-white-50">Choose a routine, keep a steady pace, and log your progress.</p>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body p-4">
+        <i class="bi bi-fire fs-1" style="color: #f59e0b;"></i>
+        <h3 class="h4 mt-3">Weight Loss Plan</h3>
+        <p class="workout-plan-copy">A cardio-focused routine to build consistency.</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Running - 30 min</li>
+          <li class="list-group-item">Jump Rope - 15 min</li>
+          <li class="list-group-item">Cycling - 20 min</li>
+        </ul>
+      </div>
+      <div class="card-footer border-0 bg-transparent">
+        <a href="{% url 'workout_create' %}" class="btn btn-primary w-100">Start this plan</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body p-4">
+        <i class="bi bi-lightning-charge-fill fs-1" style="color: #f43f5e;"></i>
+        <h3 class="h4 mt-3">Muscle Gain Plan</h3>
+        <p class="workout-plan-copy">Build strength with focused resistance sessions.</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Chest Workout</li>
+          <li class="list-group-item">Back Workout</li>
+          <li class="list-group-item">Leg Workout</li>
+        </ul>
+      </div>
+      <div class="card-footer border-0 bg-transparent">
+        <a href="{% url 'workout_create' %}" class="btn btn-primary w-100">Start this plan</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body p-4">
+        <i class="bi bi-flower1 fs-1" style="color: #10b981;"></i>
+        <h3 class="h4 mt-3">Yoga Plan</h3>
+        <p class="workout-plan-copy">Move, stretch, and recover with mindful practice.</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Surya Namaskar</li>
+          <li class="list-group-item">Bhujangasana</li>
+          <li class="list-group-item">Vrikshasana</li>
+        </ul>
+      </div>
+      <div class="card-footer border-0 bg-transparent">
+        <a href="{% url 'yoga' %}" class="btn btn-primary w-100">Explore yoga</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

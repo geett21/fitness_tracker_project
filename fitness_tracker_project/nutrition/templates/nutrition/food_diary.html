@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block page_title %}Food Diary{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+    <a href="{% url 'nutrition_home' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>
+        Back to Nutrition
+    </a>
+</div>
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header border-0 text-white p-4" style="background: linear-gradient(120deg, #087f5b, #20c997);">
+            <div class="d-flex align-items-center gap-3"><i class="bi bi-journal-plus fs-2"></i>
+                <div>
+                    <h3 class="mb-1">Track what fuels you</h3>
+                    <p class="mb-0 text-white-50">Add meals and monitor today's nutrition.</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Add Food</button>
+            </form>
+
+            <div class="row mb-4">
+                <div class="col-md-3 mb-2">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body">
+                            <h5>Calories</h5>
+                            <h3>{{ total_calories }} kcal</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h5>Protein</h5>
+                            <h3>{{ total_protein }} g</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="card bg-warning">
+                        <div class="card-body">
+                            <h5>Carbs</h5>
+                            <h3>{{ total_carbs }} g</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <h5>Fats</h5>
+                            <h3>{{ total_fats }} g</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Food History</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Food</th>
+                            <th>Meal</th>
+                            <th>Calories</th>
+                            <th>Protein</th>
+                            <th>Carbs</th>
+                            <th>Fats</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for food in foods %}
+                        <tr>
+                            <td>{{ food.food_name }}</td>
+                            <td>{{ food.meal }}</td>
+                            <td>{{ food.calories }}</td>
+                            <td>{{ food.protein }} g</td>
+                            <td>{{ food.carbs }} g</td>
+                            <td>{{ food.fats }} g</td>
+                            <td>{{ food.date }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">No food entries yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

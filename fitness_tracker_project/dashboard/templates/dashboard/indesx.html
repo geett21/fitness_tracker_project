@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+
+{% block page_title %}
+Fitness Dashboard
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="row">
+
+
+<!-- Welcome Card -->
+
+<div class="col-md-12">
+
+<div class="card bg-primary text-white shadow">
+
+<div class="card-body">
+
+<h2>
+👋 Welcome {{ request.user.username }}
+</h2>
+
+<p>
+Track your fitness journey every day.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Weight -->
+
+<div class="col-md-3">
+
+<div class="card shadow">
+
+<div class="card-body text-center">
+
+<h3>
+⚖️
+</h3>
+
+<h5>
+Weight
+</h5>
+
+<h2>
+{{ weight }} kg
+</h2>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- Water -->
+
+<div class="col-md-3">
+
+<div class="card shadow">
+
+<div class="card-body text-center">
+
+<h3>
+💧
+</h3>
+
+<h5>
+Water
+</h5>
+
+<h2>
+{{ water }} L
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- Workout -->
+
+<div class="col-md-3">
+
+<div class="card shadow">
+
+<div class="card-body text-center">
+
+<h3>
+🏋️
+</h3>
+
+<h5>
+Workout
+</h5>
+
+<h2>
+{{ workout }}
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- Goal -->
+
+<div class="col-md-3">
+
+<div class="card shadow">
+
+<div class="card-body text-center">
+
+<h3>
+🎯
+</h3>
+
+<h5>
+Goal
+</h5>
+
+<h2>
+{{ goal }}
+</h2>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<br>
+
+
+<div class="card shadow">
+
+
+<div class="card-header bg-info text-white">
+
+<h4>
+📈 Progress Overview
+</h4>
+
+</div>
+
+
+<div class="card-body">
+
+
+<p class="text-center">
+Your fitness progress chart will appear here.
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+{% endblock %}
