@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block title %}{{ report.period_name }} | FitTrack{% endblock %}
+{% block page_title %}{{ report.period_name }}{% endblock %}
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb float-sm-end">
+    <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'reports:dashboard' %}">Reports</a></li>
+    <li class="breadcrumb-item active">{{ report.period_name }}</li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .report-heading {
+    background: linear-gradient(135deg, #0d6efd, #084298);
+    color: white;
+    border-radius: .75rem;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .report-heading + .row {
+    margin-top: 0 !important;
+  }
+
+  .metric-card {
+    border: 1px solid #e4eaf2;
+    border-radius: .65rem;
+    height: auto;
+  }
+
+  .metric-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #e8f1ff;
+    color: #0d6efd;
+  }
+
+  .report-controls .form-label,
+  .report-dark-text {
+    color: #344054 !important;
+    opacity: 1 !important;
+  }
+
+  .report-controls,
+  .metric-card,
+  .card-header,
+  .table,
+  .card-footer {
+    color: #1f2937;
+  }
+
+  .report-heading .opacity-75 {
+    opacity: 1 !important;
+  }
+
+  @media print {
+    .app-sidebar,
+    .app-header,
+    .app-footer,
+    .app-content-header,
+    .report-controls,
+    .no-print {
+      display: none !important;
+    }
+
+    .app-main {
+      margin-left: 0 !important;
+    }
+
+    .app-content {
+      padding: 0 !important;
+    }
+
+    .report-heading {
+      color: #111827 !important;
+      background: white !important;
+      border: 1px solid #d0d5dd;
+    }
+
+    .metric-card {
+      break-inside: avoid;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="report-controls card border-0 shadow-sm mb-3">
+  <div class="card-body">
+    <form
+      method="get"
+      action="{% if report.period_type == 'monthly' %}{% url 'reports:monthly' %}{% else %}{% url 'reports:weekly' %}{% endif %}"
+      class="row align-items-end g-3"
+    >
+      <div class="col-md-4">
+        <label class="form-label fw-semibold" for="period">
+          {% if report.period_type == 'monthly' %}
+            Select month
+          {% else %}
+            Week starting
+          {% endif %}
+        </label>
+
+        <input
+          class="form-control"
+          id="period"
+          name="{% if report.period_type == 'monthly' %}month{% else %}week{% endif %}"
+          type="{% if report.period_type == 'monthly' %}month{% else %}date{% endif %}"
+          value="{{ report.input_value }}"
+          required
+        >
+      </div>
+
+      <div class="col-md-auto">
+        <button class="btn btn-primary" type="submit">
+          <i class="bi bi-eye me-1"></i>
+          View report
+        </button>
+      </div>
+
+      <div class="col-md-auto ms-md-auto d-flex gap-2">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          onclick="window.print()"
+        >
+          <i class="bi bi-printer me-1"></i>
+          Print report
+        </button>
+
+        <a
+          class="btn btn-outline-primary"
+          href="{% if report.period_type == 'monthly' %}{% url 'reports:monthly_pdf' %}{% else %}{% url 'reports:weekly_pdf' %}{% endif %}?{% if report.period_type == 'monthly' %}month{% else %}week{% endif %}={{ report.input_value }}"
+        >
+          <i class="bi bi-file-earmark-pdf me-1"></i>
+          Export PDF
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="report-heading mb-0 shadow-sm">
+  <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+    <div>
+      <p class="text-uppercase small fw-semibold mb-1 opacity-75">
+        {{ report.period_name }}
+      </p>
+
+      <h2 class="mb-2">{{ report.period_label }}</h2>
+
+      <p class="mb-0 opacity-75">
+        Prepared for {{ user.get_full_name|default:user.username }}
+      </p>
+    </div>
+
+    <i class="bi bi-clipboard-data fs-1 opacity-75"></i>
+  </div>
+</div>
+
+<div class="row g-0 mb-2">
+  {% for metric in report.metrics %}
+  <div class="col-sm-6 col-xl-3">
+    <div class="metric-card bg-white p-3 shadow-sm">
+      <div class="d-flex justify-content-between align-items-start">
+        <span class="metric-icon">
+          <i class="bi {{ metric.icon }}"></i>
+        </span>
+
+        <span class="small report-dark-text">
+          {{ metric.label }}
+        </span>
+      </div>
+
+      <div class="fs-4 fw-semibold mt-3">{{ metric.value }}</div>
+
+      <div class="small report-dark-text mt-1">{{ metric.detail }}</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white py-3">
+    <h3 class="h5 mb-0">Activity details</h3>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Activity</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for row in report.activity_rows %}
+        <tr>
+          <td>{{ row.date|date:"d M Y" }}</td>
+          <td>{{ row.type }}</td>
+          <td>{{ row.value }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="text-center report-dark-text py-4">
+            No user-owned records found for this period.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-footer bg-white report-dark-text small">
+    <i class="bi bi-info-circle me-1"></i>
+    {{ report.data_note }}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block page_title %}AI Chat Assistant{% endblock %}
+
+{% block extra_css %}
+<style>
+  .ai-chat-page { width: 100%; max-width: 980px; margin: 0 auto; }
+  .ai-chat-card { width: 100% !important; }
+  .ai-chat-card .card-header {
+    background: linear-gradient(135deg, rgba(0,212,212,.24), rgba(0,229,255,.12)) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+  }
+  .ai-chat-card .card-body { padding: 1.5rem; }
+  .ai-chat-input { min-height: 52px; width: 100%; }
+  .ai-chat-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    min-height: 180px;
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 0.75rem 0.25rem 0.25rem;
+  }
+  .chat-bubble {
+    display: inline-block;
+    max-width: 85%;
+    padding: 0.8rem 1rem;
+    border-radius: 1rem;
+    line-height: 1.5;
+    white-space: pre-line;
+    box-shadow: 0 6px 18px rgba(5, 30, 30, 0.12);
+  }
+  .chat-bubble.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #00b8cc, #00d4d4);
+    color: #051e1e;
+    border-bottom-right-radius: 0.35rem;
+    box-shadow: 0 8px 16px rgba(0,180,204,0.22);
+  }
+  .chat-bubble.ai {
+    align-self: flex-start;
+    background: #e0f7f6;
+    color: #051e1e;
+    border: 1px solid rgba(0,212,212,.12);
+    border-bottom-left-radius: 0.35rem;
+  }
+  .chat-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+    opacity: 0.8;
+  }
+  .chat-empty {
+    color: #d7dfe9;
+    font-size: 0.95rem;
+    padding: 1rem 0.5rem 0;
+  }
+  @media (max-width: 576px) { .ai-chat-card .card-body { padding: 1rem; } .chat-bubble { max-width: 92%; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="ai-chat-page py-2">
+  <div class="card ai-chat-card border-0 shadow-sm">
+    <div class="card-header bg-primary text-white p-4">
+      <div class="d-flex align-items-center gap-3">
+        <span class="bg-white bg-opacity-25 rounded-circle d-inline-flex align-items-center justify-content-center" style="width:44px;height:44px"><i class="bi bi-robot fs-4"></i></span>
+        <div><h3 class="mb-1">AI Chat Assistant</h3><p class="mb-0 opacity-75">Ask about workouts, food, recovery, or healthy habits.</p></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div id="chat-thread" class="ai-chat-thread" aria-live="polite">
+        {% if answer %}
+          <div class="chat-bubble user"><div class="chat-label">You</div>{{ answer }}</div>
+        {% else %}
+          <div class="chat-empty">Your fitness coach conversation will appear here.</div>
+        {% endif %}
+      </div>
+
+      <form id="ai-chat-form" method="post" class="mt-3">
+        {% csrf_token %}
+        <label for="question" class="form-label fw-semibold">What would you like help with?</label>
+        <div class="input-group input-group-lg mb-3">
+          <input id="question" type="text" name="question" class="form-control ai-chat-input" placeholder="Example: What should I eat after a workout?" required>
+          <button id="ask-ai-button" type="submit" class="btn btn-primary px-4"><i class="bi bi-send me-1"></i> Ask AI</button>
+        </div>
+      </form>
+      <div id="chat-api-error" class="alert alert-danger d-none" role="alert"></div>
+      {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('ai-chat-form');
+    const questionInput = document.getElementById('question');
+    const thread = document.getElementById('chat-thread');
+    const errorBox = document.getElementById('chat-api-error');
+    const button = document.getElementById('ask-ai-button');
+    const apiUrl = '{% url "ai_coach:api_chat" %}';
+
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return '';
+    }
+
+    function appendMessage(sender, text) {
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+      bubble.innerHTML = `<div class="chat-label">${sender === 'user' ? 'You' : 'Coach'}</div>${text}`;
+      thread.appendChild(bubble);
+      thread.scrollTop = thread.scrollHeight;
+    }
+
+    function clearEmptyState() {
+      const empty = thread.querySelector('.chat-empty');
+      if (empty) empty.remove();
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const question = questionInput.value.trim();
+      if (!question) {
+        errorBox.textContent = 'Please enter a question.';
+        errorBox.classList.remove('d-none');
+        return;
+      }
+
+      clearEmptyState();
+      appendMessage('user', question);
+      questionInput.value = '';
+
+      button.disabled = true;
+      button.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Thinking...';
+      errorBox.classList.add('d-none');
+      errorBox.textContent = '';
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({ question: question }),
+        credentials: 'same-origin',
+      })
+        .then(function (response) {
+          return response.json().then(function (data) {
+            return { ok: response.ok, data: data };
+          });
+        })
+        .then(function (result) {
+          if (!result.ok) {
+            throw new Error(result.data.error || 'Unable to get a response right now.');
+          }
+
+          const message = result.data.response || 'No answer was returned.';
+          appendMessage('ai', message);
+        })
+        .catch(function (error) {
+          appendMessage('ai', error.message);
+          errorBox.textContent = error.message;
+          errorBox.classList.remove('d-none');
+        })
+        .finally(function () {
+          button.disabled = false;
+          button.innerHTML = '<i class="bi bi-send me-1"></i> Ask AI';
+        });
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block page_title %}BMI Calculator{% endblock %}
+
+{% block extra_css %}
+<style>
+  body { background: linear-gradient(135deg, #f5f7fa, #c3cfe2); min-height: 100vh; }
+  .bmi-container { max-width: 700px; margin: 3rem auto; }
+  .bmi-card { border: none; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-radius: 1rem; overflow: hidden; }
+  .bmi-header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 2.5rem 2rem; }
+  .bmi-header-icon { width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem; }
+  .bmi-form-section { padding: 2.5rem; background: white; }
+  .form-label { font-weight: 600; color: #333; margin-bottom: 0.75rem; font-size: 0.95rem; }
+  .form-control-lg { border: 2px solid #e9ecef; border-radius: 0.5rem; padding: 0.85rem 1rem; font-size: 1rem; transition: all 0.3s ease; }
+  .form-control-lg:focus { border-color: #667eea; box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.1); }
+  .input-group-text { border: 2px solid #e9ecef; background: transparent; color: #667eea; font-weight: 600; }
+  .btn-calculate { background: linear-gradient(135deg, #667eea, #764ba2); border: none; padding: 1rem 2rem; font-size: 1rem; font-weight: 600; border-radius: 0.5rem; transition: transform 0.2s ease; }
+  .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3); }
+  .bmi-result { margin-top: 2.5rem; padding: 2rem; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 0.75rem; text-align: center; border-left: 5px solid #667eea; }
+  .bmi-display { font-size: 3.5rem; font-weight: 700; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+  .badge-lg { padding: 0.75rem 1.5rem; font-size: 1.1rem; }
+  .bmi-guide { margin-top: 2rem; padding: 1.5rem; background: white; border-radius: 0.75rem; border: 2px solid #f0f0f0; }
+  .bmi-guide h6 { font-weight: 700; color: #667eea; margin-bottom: 1rem; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .bmi-guide ul { list-style: none; padding: 0; }
+  .bmi-guide li { padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; }
+  .bmi-guide li:last-child { border-bottom: none; }
+  .bmi-guide .badge { margin-right: 0.75rem; }
+  .back-link { margin-bottom: 1.5rem; }
+  .back-link .btn { font-weight: 500; }
+  .health-text { line-height: 1.8; }
+  @media (max-width: 576px) { 
+    .bmi-header { padding: 1.5rem 1rem; } 
+    .bmi-form-section { padding: 1.5rem; } 
+    .bmi-display { font-size: 2.5rem; }
+    .bmi-container { margin: 1rem auto; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="bmi-container">
+  <div class="back-link">
+    <a href="{% url 'ai_coach:home' %}" class="btn btn-outline-secondary"><i class="bi bi-chevron-left me-1"></i> Back to AI Coach</a>
+  </div>
+
+  <div class="card bmi-card">
+    <div class="bmi-header">
+      <div class="d-flex align-items-center">
+        <div class="bmi-header-icon">
+          <i class="bi bi-calculator fs-2"></i>
+        </div>
+        <div>
+          <h3 class="mb-1">BMI Calculator</h3>
+          <p class="mb-0 opacity-75">Calculate and monitor your Body Mass Index</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bmi-form-section">
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+        <div class="col-md-6">
+          <label for="weight" class="form-label">Weight (kg)</label>
+          <div class="input-group input-group-lg">
+            <input type="number" id="weight" name="weight" class="form-control form-control-lg" step="0.1" placeholder="e.g., 70" required>
+            <span class="input-group-text">kg</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="height" class="form-label">Height (cm)</label>
+          <div class="input-group input-group-lg">
+            <input type="number" id="height" name="height" class="form-control form-control-lg" step="0.1" placeholder="e.g., 180" required>
+            <span class="input-group-text">cm</span>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-calculate w-100 text-white"><i class="bi bi-calculator me-2"></i> Calculate BMI</button>
+        </div>
+      </form>
+
+      {% if bmi is not none %}
+        <div class="bmi-result">
+          <div class="bmi-display">{{ bmi|floatformat:1 }}</div>
+          <div class="fs-5 fw-semibold mb-3 health-text">
+            {% if bmi < 18.5 %}
+              <span class="badge badge-lg bg-info">Underweight</span>
+              <p class="text-muted mt-3">Consider consulting a healthcare provider for personalized nutritional and exercise guidance.</p>
+            {% elif bmi < 25 %}
+              <span class="badge badge-lg bg-success">Normal Weight</span>
+              <p class="text-muted mt-3">Excellent! Your BMI is in the healthy range. Keep maintaining your healthy lifestyle! 🎉</p>
+            {% elif bmi < 30 %}
+              <span class="badge badge-lg bg-warning text-dark">Overweight</span>
+              <p class="text-muted mt-3">A balanced diet and regular physical activity can help you reach your ideal weight.</p>
+            {% else %}
+              <span class="badge badge-lg bg-danger">Obese</span>
+              <p class="text-muted mt-3">Consult with a healthcare professional for personalized guidance, diet plans, and exercise routines.</p>
+            {% endif %}
+          </div>
+
+          <div class="bmi-guide">
+            <h6 class="mb-3">📊 BMI Reference Chart</h6>
+            <ul>
+              <li><span class="badge bg-info">Underweight</span> BMI &lt; 18.5</li>
+              <li><span class="badge bg-success">Normal Weight</span> BMI 18.5 - 24.9</li>
+              <li><span class="badge bg-warning text-dark">Overweight</span> BMI 25.0 - 29.9</li>
+              <li><span class="badge bg-danger">Obese</span> BMI ≥ 30</li>
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

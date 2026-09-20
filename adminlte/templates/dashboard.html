@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+  .dashboard-stat-card {
+    border: 1px solid rgba(15, 118, 110, .12) !important;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .dashboard-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(19, 78, 74, .12) !important;
+  }
+  .dashboard-stat-card .card-body { padding: 1.75rem; }
+  .dashboard-stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .72);
+  }
+  .dashboard-stat-card .stat-label { color: #285e6b !important; }
+  .dashboard-stat-card .stat-value { color: #134e4a !important; }
+  .dashboard-stat-card.goals { background: #e2f3ef !important; }
+  .dashboard-stat-card.water { background: #e0f4f3 !important; }
+  .dashboard-stat-card.steps { background: #eaf5df !important; }
+  .dashboard-stat-card.weight { background: #e7eff4 !important; }
+  .dashboard-stat-card.goals .stat-icon { color: #0f766e !important; }
+  .dashboard-stat-card.water .stat-icon { color: #087f8c !important; }
+  .dashboard-stat-card.steps .stat-icon { color: #4d7c0f !important; }
+  .dashboard-stat-card.weight .stat-icon { color: #176b82 !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="py-2">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <p class="text-uppercase text-primary fw-semibold small mb-1">Fitness overview</p>
+      <h2 class="mb-1">Build healthy momentum</h2>
+      <p class="text-secondary mb-0">Keep the small habits visible and the next step simple.</p>
+    </div>
+    <a href="{% url 'workout_create' %}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Log workout</a>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card goals h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-bullseye fs-3"></i></span><p class="stat-label mb-1 mt-3">Goals</p><h2 class="stat-value mb-0">{{ total_goals }}</h2></div></div></div>
+    <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card water h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-droplet fs-3"></i></span><p class="stat-label mb-1 mt-3">Water logs</p><h2 class="stat-value mb-0">{{ total_water_entries }}</h2></div></div></div>
+    <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card steps h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-shoe-print fs-3"></i></span><p class="stat-label mb-1 mt-3">Latest steps</p><h2 class="stat-value mb-0">{{ steps_today }}</h2></div></div></div>
+    <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card weight h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-speedometer2 fs-3"></i></span><p class="stat-label mb-1 mt-3">Latest weight</p><h2 class="stat-value mb-0">{% if latest_weight %}{{ latest_weight }} kg{% else %}—{% endif %}</h2></div></div></div>
+  </div>
+
+  <div class="card border-0 shadow-sm"><div class="card-body p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3"><div><h4 class="mb-1">Quick actions</h4><p class="text-secondary mb-0">Add a new health entry in a few seconds.</p></div><span class="badge text-bg-primary">{{ total_workouts }} workouts logged</span></div>
+    <div class="d-flex flex-wrap gap-2"><a class="btn btn-outline-primary" href="{% url 'goal_create' %}">Add goal</a><a class="btn btn-outline-info" href="{% url 'water_create' %}">Log water</a><a class="btn btn-outline-success" href="{% url 'weight_create' %}">Log weight</a><a class="btn btn-outline-dark" href="{% url 'progress_home' %}">View progress</a></div>
+  </div></div>
+</div>
+{% endblock %}

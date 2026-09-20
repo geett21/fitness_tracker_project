@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>BMI Analysis</h1>
+<form method="post">{% csrf_token %}
+  <label>Weight (kg): <input name="weight" /></label><br>
+  <label>Height (cm): <input name="height" /></label><br>
+  <button type="submit">Calculate</button>
+</form>
+{% if bmi is not none %}
+  <p>Your BMI: {{ bmi }}</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block page_title %}Water intake{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4"><div><p class="text-uppercase text-primary fw-semibold small mb-1">Hydration</p><h2 class="mb-1">Water intake</h2><p class="text-secondary mb-0">Keep a simple record of your daily hydration.</p></div><a href="{% url 'water_create' %}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Add water</a></div>
+<div class="card"><div class="card-body p-0"><div class="table-responsive"><table class="table table-hover align-middle"><thead><tr><th>Amount</th><th>Date</th><th>Notes</th><th class="text-end">Actions</th></tr></thead><tbody>{% for w in water %}<tr><td><span class="fw-semibold text-info">{{ w.amount }} L</span></td><td>{{ w.date }}</td><td class="text-secondary">{{ w.notes|default:"—" }}</td><td class="text-end"><a href="{% url 'water_update' w.id %}" class="btn btn-sm btn-outline-primary">Edit</a> <a href="{% url 'water_delete' w.id %}" class="btn btn-sm btn-outline-danger">Delete</a></td></tr>{% empty %}<tr><td colspan="4" class="text-center py-5"><i class="bi bi-droplet fs-2 text-info d-block mb-2"></i><span class="text-secondary">No water entries yet. Start with your first glass.</span></td></tr>{% endfor %}</tbody></table></div></div></div>
+{% endblock %}

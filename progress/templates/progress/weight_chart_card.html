@@ -1,0 +1,23 @@
+{% if weight_values %}
+<div class="card shadow-sm mb-4" style="border-top: 4px solid #2563eb;">
+    <div class="card-header text-white" style="background: linear-gradient(135deg, #2563eb, #60a5fa);">
+        <h3 class="card-title mb-0">Weight Progress</h3>
+    </div>
+    <div class="card-body">
+        <canvas id="weightChart" height="100"></canvas>
+    </div>
+</div>
+{% else %}
+<div class="card shadow-sm mb-4" style="border-top: 4px solid #2563eb;">
+    <div class="card-header text-white" style="background: linear-gradient(135deg, #2563eb, #60a5fa);">
+        <h3 class="card-title mb-0">Weight Progress</h3>
+    </div>
+    <div class="card-body">
+        <div class="text-center p-4">
+            <h5>No weight data available</h5>
+            <p class="text-muted">Add your weight records first.</p>
+            <a href="{% url 'weight_create' %}" class="btn btn-primary">Add Weight</a>
+        </div>
+    </div>
+</div>
+{% endif %}
