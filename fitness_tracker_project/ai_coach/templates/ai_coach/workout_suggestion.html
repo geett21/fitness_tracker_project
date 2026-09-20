@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Workout Suggestion{% endblock %}
+{% block page_title %}AI Workout Suggestion{% endblock %}
+
+{% block extra_css %}
+<style>
+	.workout-level-card {
+		border: 0;
+		border-radius: .75rem;
+		overflow: hidden;
+	}
+
+	.workout-level-card .card-header {
+		color: white;
+		border: 0;
+	}
+
+	.workout-level-card ul {
+		padding-left: 1.25rem;
+		margin-bottom: 0;
+	}
+
+	.workout-level-card li {
+		color: #344054;
+		margin-bottom: .65rem;
+	}
+
+	.workout-level-card li:last-child {
+		margin-bottom: 0;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+	<div class="mb-4">
+		<h2 class="text-primary">✨ AI Workout Suggestions</h2>
+		<p class="mb-0" style="color: #344054;">
+			Choose a workout level that matches your fitness and health needs.
+		</p>
+	</div>
+
+	<div class="row g-4">
+		<div class="col-lg-4">
+			<div class="card workout-level-card shadow-sm h-100">
+				<div class="card-header bg-success p-4">
+					<h3 class="h4 mb-1">Normal Workout</h3>
+					<p class="mb-0">Beginner to intermediate</p>
+				</div>
+				<div class="card-body p-4">
+					<ul>
+						<li>Warm-up walk - 5 minutes</li>
+						<li>Bodyweight squats - 3 sets x 12 reps</li>
+						<li>Push-ups - 3 sets x 8 reps</li>
+						<li>Reverse lunges - 3 sets x 10 each leg</li>
+						<li>Plank - 3 sets x 30 seconds</li>
+						<li>Brisk walking - 20 minutes</li>
+						<li>Cool-down stretching - 5 minutes</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-4">
+			<div class="card workout-level-card shadow-sm h-100">
+				<div class="card-header bg-danger p-4">
+					<h3 class="h4 mb-1">Hard Workout</h3>
+					<p class="mb-0">Advanced fitness level</p>
+				</div>
+				<div class="card-body p-4">
+					<ul>
+						<li>Dynamic warm-up - 8 minutes</li>
+						<li>Jump squats - 4 sets x 15 reps</li>
+						<li>Burpees - 4 sets x 12 reps</li>
+						<li>Mountain climbers - 4 sets x 30 seconds</li>
+						<li>Walking lunges - 4 sets x 12 each leg</li>
+						<li>Push-ups - 4 sets x 15 reps</li>
+						<li>Running intervals - 20 minutes</li>
+						<li>Cool-down stretching - 8 minutes</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-4">
+			<div class="card workout-level-card shadow-sm h-100">
+				<div class="card-header bg-info p-4">
+					<h3 class="h4 mb-1">Pregnancy-Safe Workout</h3>
+					<p class="mb-0">Gentle, low-impact movement</p>
+				</div>
+				<div class="card-body p-4">
+					<ul>
+						<li>Easy warm-up walk - 5 minutes</li>
+						<li>Comfortable walking - 15 to 20 minutes</li>
+						<li>Chair-supported squats - 2 sets x 10 reps</li>
+						<li>Wall push-ups - 2 sets x 10 reps</li>
+						<li>Pelvic floor exercises - 2 sets x 10 reps</li>
+						<li>Gentle hip and back stretches - 5 minutes</li>
+						<li>Relaxed breathing - 3 minutes</li>
+					</ul>
+					<div class="alert alert-warning mt-4 mb-0">
+						During pregnancy, get approval from a doctor or midwife first. Stop if you feel pain, bleeding, dizziness, or unusual breathlessness.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

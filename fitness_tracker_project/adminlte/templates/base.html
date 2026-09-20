@@ -1,0 +1,50 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  {% include "base_components/head.html" %}
+  <body class="layout-fixed sidebar-expand-md bg-body-tertiary">
+    <!--begin::App Wrapper-->
+    <div class="app-wrapper">
+      {% include "base_components/header.html" %}
+      {% include "base_components/sidebar.html" %}
+
+      <!--begin::App Main-->
+      <main class="app-main">
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-6">
+                <h1 class="mb-0 fs-3">{% block page_title %}Dashboard{% endblock %}</h1>
+              </div>
+              <div class="col-sm-6">
+                {% block breadcrumb %}
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                  </ol>
+                </nav>
+                {% endblock %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end::App Content Header-->
+        <!--begin::App Content-->
+        <div class="app-content">
+          <div class="container-fluid">
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+        <!--end::App Content-->
+      </main>
+      <!--end::App Main-->
+
+      {% include "base_components/footer.html" %}
+    </div>
+    <!--end::App Wrapper-->
+
+    {% include "base_components/scripts.html" %}
+  </body>
+</html>

@@ -1,0 +1,78 @@
+{% load static %}
+
+<style>
+  .ai-coach-context .workout-menu > .nav-treeview {
+    display: none !important;
+  }
+</style>
+
+<aside class="app-sidebar bg-body-secondary shadow {% if request.resolver_match and request.resolver_match.namespace == 'ai_coach' %}ai-coach-context{% endif %}" data-bs-theme="dark">
+  <div class="sidebar-brand">
+    <a href="{% url 'dashboard' %}" class="brand-link">
+      <img src="{% static 'img/AdminLTELogo.png' %}" alt="Fitness Tracker" class="brand-image opacity-75 shadow">
+      <span class="brand-text fw-light">Fitness Tracker</span>
+    </a>
+  </div>
+
+  <div class="sidebar-wrapper">
+    <nav class="mt-2" aria-label="Main navigation">
+      <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" data-accordion="true">
+        <li class="nav-item"><a href="{% url 'dashboard' %}" class="nav-link"><span class="me-2">📊</span><p>Dashboard</p></a></li>
+        <li class="nav-item {% if '/goals/' in request.path %}menu-open{% endif %}">
+          <a href="{% url 'goal_list' %}" class="nav-link {% if '/goals/' in request.path %}active{% endif %}"><span class="me-2">🎯</span><p>Goals <i class="nav-arrow bi bi-chevron-right"></i></p></a>
+          <ul class="nav nav-treeview"><li class="nav-item"><a href="{% url 'goal_create' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Add Goal</p></a></li></ul>
+        </li>
+
+        <li class="nav-item workout-menu {% if '/workout/' in request.path and not request.resolver_match.namespace == 'ai_coach' %}menu-open{% endif %}">
+          <a href="#" class="nav-link {% if '/workout/' in request.path and not request.resolver_match.namespace == 'ai_coach' %}active{% endif %}"><span class="me-2">🏋️</span><p>Workouts <i class="nav-arrow bi bi-chevron-right"></i></p></a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="{% url 'workout_list' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>My Workouts</p></a></li>
+            <li class="nav-item"><a href="{% url 'workout_plans' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Workout Plans</p></a></li>
+            <li class="nav-item"><a href="{% url 'daily_workout' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Daily Workout</p></a></li>
+            <li class="nav-item"><a href="{% url 'exercise_library' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Exercise Library</p></a></li>
+            <li class="nav-item"><a href="{% url 'yoga' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Yoga</p></a></li>
+            <li class="nav-item"><a href="{% url 'workout_timer' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Workout Timer</p></a></li>
+            <li class="nav-item"><a href="{% url 'calories' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Calories Burned</p></a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item {% if '/nutrition/' in request.path %}menu-open{% endif %}">
+          <a href="#" class="nav-link {% if '/nutrition/' in request.path %}active{% endif %}"><span class="me-2">🍎</span><p>Nutrition <i class="nav-arrow bi bi-chevron-right"></i></p></a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="{% url 'nutrition_home' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Nutrition Hub</p></a></li>
+            <li class="nav-item"><a href="{% url 'food_diary' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Food Diary</p></a></li>
+            <li class="nav-item"><a href="{% url 'macro_tracker' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Macro Tracker</p></a></li>
+            <li class="nav-item"><a href="{% url 'calorie_calculator' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Calorie Calculator</p></a></li>
+            <li class="nav-item"><a href="{% url 'meal_plans' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Meal Plans</p></a></li>
+            <li class="nav-item"><a href="{% url 'nutrition_tips' %}" class="nav-link"><i class="nav-icon bi bi-circle"></i><p>Nutrition Tips</p></a></li>
+          </ul>
+        </li>
+
+        <!-- AI Coach -->
+        <li class="nav-item {% if request.resolver_match and request.resolver_match.namespace == 'ai_coach' %}menu-open{% endif %}">
+          <a href="{% url 'ai_coach:home' %}" class="nav-link {% if request.resolver_match and request.resolver_match.namespace == 'ai_coach' %}active{% endif %}">
+            <i class="nav-icon bi bi-robot"></i>
+            <p>AI Coach <i class="nav-arrow bi bi-chevron-right"></i></p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="/ai-coach/workout/" class="nav-link {% if request.path == '/ai-coach/workout/' %}active{% endif %}"><i class="nav-icon bi bi-stars"></i><p>AI Workout Suggestion</p></a></li>
+            <li class="nav-item"><a href="{% url 'ai_coach:ai_diet' %}" class="nav-link"><i class="nav-icon bi bi-egg-fried"></i><p>Diet Suggestion</p></a></li>
+            <li class="nav-item"><a href="{% url 'ai_coach:bmi' %}" class="nav-link"><i class="nav-icon bi bi-activity"></i><p>BMI Analysis</p></a></li>
+            <li class="nav-item"><a href="{% url 'ai_coach:ai_motivation' %}" class="nav-link"><i class="nav-icon bi bi-stars"></i><p>Daily Motivation</p></a></li>
+            <li class="nav-item"><a href="{% url 'ai_coach:chat' %}" class="nav-link"><i class="nav-icon bi bi-chat-dots"></i><p>Chat Assistant</p></a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a href="{% url 'water_list' %}" class="nav-link {% if '/water/' in request.path %}active{% endif %}"><span class="me-2">💧</span><p>Water</p></a></li>
+        <li class="nav-item"><a href="{% url 'weight_list' %}" class="nav-link {% if '/weight/' in request.path %}active{% endif %}"><span class="me-2">⚖️</span><p>Weight</p></a></li>
+        <li class="nav-item"><a href="{% url 'reports:dashboard' %}" class="nav-link {% if '/reports/' in request.path %}active{% endif %}"><span class="me-2">📄</span><p>Reports</p></a></li>
+        <li class="nav-item"><a href="{% url 'notifications_page' %}" class="nav-link {% if '/notifications/' in request.path %}active{% endif %}"><span class="me-2">🔔</span><p>Notifications</p></a></li>
+        <li class="nav-item"><a href="{% url 'feedback_page' %}" class="nav-link {% if '/feedback/' in request.path %}active{% endif %}"><span class="me-2">💬</span><p>Feedback</p></a></li>
+        <li class="nav-item"><a href="{% url 'settings_page' %}" class="nav-link {% if '/settings/' in request.path %}active{% endif %}"><span class="me-2">⚙️</span><p>Settings</p></a></li>
+        <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link {% if '/profile/' in request.path %}active{% endif %}"><span class="me-2">👤</span><p>Profile</p></a></li>
+
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link text-danger"><span class="me-2">🚪</span><p>Logout</p></a></li>
+      </ul>
+    </nav>
+  </div>
+</aside>

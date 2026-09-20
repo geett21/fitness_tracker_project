@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Add Weight</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label>Weight (kg)</label>
+                    {{ form.weight }}
+                </div>
+
+                <div class="mb-3">
+                    <label>Height (cm)</label>
+                    {{ form.height }}
+                </div>
+
+                <div class="mb-3">
+                    <label>Goal</label>
+                    {{ form.goal }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Save Weight
+                </button>
+
+                <a href="{% url 'weight_list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

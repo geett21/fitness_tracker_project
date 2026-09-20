@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block page_title %}AI Coach{% endblock %}
+
+{% block content %}
+<div class="py-2">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <p class="text-uppercase text-primary fw-semibold small mb-1">Personal guidance</p>
+      <h2 class="mb-1">Your AI Fitness Coach</h2>
+      <p class="text-secondary mb-0">Practical support for your training and nutrition goals.</p>
+    </div>
+    <a href="{% url 'ai_coach:chat' %}" class="btn btn-primary"><i class="bi bi-chat-dots me-1"></i> Ask a question</a>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6"><div class="card h-100 shadow-sm border-0"><div class="card-body text-center p-4">
+      <i class="bi bi-egg-fried text-success fs-2"></i><h4 class="mt-2">Diet Suggestion</h4><p class="text-secondary">Get healthy meal ideas tailored to your preferences.</p>
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#dietModal">Explore nutrition</button>
+    </div></div></div>
+    <div class="col-md-6"><div class="card h-100 shadow-sm border-0"><div class="card-body text-center p-4">
+      <i class="bi bi-heart-pulse text-primary fs-2"></i><h4 class="mt-2">Workout Suggestion</h4><p class="text-secondary">Find a routine that fits your goal and experience.</p>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#workoutModal">Plan a workout</button>
+    </div></div></div>
+    <div class="col-md-6"><div class="card h-100 shadow-sm border-0"><div class="card-body text-center p-4">
+      <i class="bi bi-chat-dots text-info fs-2"></i><h4 class="mt-2">Chat Assistant</h4><p class="text-secondary">Ask a straightforward fitness or recovery question.</p>
+      <a href="{% url 'ai_coach:chat' %}" class="btn btn-info">Start chatting</a>
+    </div></div></div>
+    <div class="col-md-6"><div class="card h-100 shadow-sm border-0"><div class="card-body text-center p-4">
+      <i class="bi bi-calculator text-purple fs-2"></i><h4 class="mt-2">BMI Calculator</h4><p class="text-secondary">Check your Body Mass Index and get insights.</p>
+      <button type="button" class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#bmiModal">Calculate BMI</button>
+    </div></div></div>
+    <div class="col-md-6"><div class="card h-100 shadow-sm border-0"><div class="card-body text-center p-4">
+      <i class="bi bi-stars text-warning fs-2"></i><h4 class="mt-2">Daily Motivation</h4><p class="text-secondary">Get a quick boost to keep your healthy habits going.</p>
+      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#motivationModal">Get motivated</button>
+    </div></div></div>
+  </div>
+</div>
+
+<!-- Diet Modal -->
+<div class="modal fade" id="dietModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title"><i class="bi bi-egg-fried"></i> Diet Suggestion</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Healthy Diet Plan</h4>
+        <ul>
+          <li><strong>Breakfast:</strong> Oats + Milk + Banana</li>
+          <li><strong>Mid Snack:</strong> Apple</li>
+          <li><strong>Lunch:</strong> Rice + Dal + Salad + Paneer</li>
+          <li><strong>Evening Snack:</strong> Green Tea + Nuts</li>
+          <li><strong>Dinner:</strong> Chapati + Vegetables + Curd</li>
+        </ul>
+        <hr>
+        <h5>💧 Hydration</h5>
+        <p>Drink at least 8-10 glasses of water daily. Adjust based on your activity level and climate.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Workout Modal -->
+<div class="modal fade" id="workoutModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title"><i class="bi bi-heart-pulse"></i> Workout Suggestion</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Today's Workout</h4>
+        <ul>
+          <li>Push Ups - 3 × 15</li>
+          <li>Squats - 3 × 20</li>
+          <li>Plank - 60 sec</li>
+          <li>Jump Rope - 10 minutes</li>
+          <li>Walking - 30 minutes</li>
+        </ul>
+        <hr>
+        <h5>💡 Tips</h5>
+        <ul>
+          <li>Warm up for 5-10 minutes before starting</li>
+          <li>Rest 60-90 seconds between sets</li>
+          <li>Stay hydrated throughout the workout</li>
+          <li>Cool down and stretch for 5 minutes after</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Motivation Modal -->
+<div class="modal fade" id="motivationModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title"><i class="bi bi-stars"></i> Daily Motivation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <h3 class="mb-4">"Your only limit is your mind."</h3>
+        <p class="fs-5">
+          <strong>Stay consistent.</strong><br>
+          <strong>Stay disciplined.</strong><br>
+          <strong>Success will follow.</strong>
+        </p>
+        <hr>
+        <p class="text-muted">Every step towards your fitness goal is progress. Believe in yourself and keep pushing forward! 💪</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BMI Calculator Modal -->
+<div class="modal fade" id="bmiModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title"><i class="bi bi-calculator"></i> BMI Calculator</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'ai_coach:bmi' %}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="weight" class="form-label fw-semibold">Weight (kg)</label>
+              <input type="number" id="weight" name="weight" class="form-control form-control-lg" step="0.1" placeholder="Enter your weight" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="height" class="form-label fw-semibold">Height (cm)</label>
+              <input type="number" id="height" name="height" class="form-control form-control-lg" step="0.1" placeholder="Enter your height" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-2"><i class="bi bi-calculator me-2"></i> Calculate BMI</button>
+        </form>
+
+        {% if bmi is not none %}
+          <div class="mt-4 p-4 bg-light rounded text-center">
+            <div class="display-4 fw-bold text-primary mb-2">{{ bmi|floatformat:1 }}</div>
+            <div class="fs-5 fw-semibold mb-3">
+              {% if bmi < 18.5 %}
+                <span class="badge bg-info">Underweight</span>
+                <p class="text-muted mt-2">Consider consulting a healthcare provider for personalized guidance.</p>
+              {% elif bmi < 25 %}
+                <span class="badge bg-success">Normal Weight</span>
+                <p class="text-muted mt-2">Great! Keep up the healthy lifestyle! 🎉</p>
+              {% elif bmi < 30 %}
+                <span class="badge bg-warning text-dark">Overweight</span>
+                <p class="text-muted mt-2">A balanced diet and exercise can help you reach your goals.</p>
+              {% else %}
+                <span class="badge bg-danger">Obese</span>
+                <p class="text-muted mt-2">Consult with a healthcare professional for personalized guidance.</p>
+              {% endif %}
+            </div>
+            <hr>
+            <div class="small text-muted">
+              <p><strong>BMI Reference:</strong></p>
+              <ul class="list-unstyled">
+                <li>🔵 Underweight: BMI &lt; 18.5</li>
+                <li>🟢 Normal: 18.5 - 24.9</li>
+                <li>🟠 Overweight: 25 - 29.9</li>
+                <li>🔴 Obese: BMI ≥ 30</li>
+              </ul>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .btn-purple { background-color: #6f42c1; border-color: #6f42c1; color: white; }
+  .btn-purple:hover { background-color: #5a32a3; border-color: #5a32a3; }
+  .text-purple { color: #6f42c1; }
+</style>
+{% endblock %}
