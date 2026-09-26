@@ -704,3 +704,46 @@ body,
   color: #52616b !important;
   opacity: 1 !important;
 }
+
+/* FitTrack readable palette: deep navy text, soft mint surfaces, and teal actions. */
+:root {
+  --fit-ink: #16324f;
+  --fit-text: #243b53;
+  --fit-muted: #52697a;
+  --fit-line: #d6e6e8;
+  --fit-surface: #f2f8f7;
+  --fit-canvas: #ffffff;
+  --fit-accent: #0f766e;
+}
+
+body,
+.app-content,
+.app-content-header {
+  color: var(--fit-text);
+}
+
+.app-content .card-body,
+.app-content .form-label,
+.app-content label,
+.app-content .table tbody td {
+  color: var(--fit-text) !important;
+}
+
+.app-content .text-muted,
+.app-content .text-secondary,
+.app-content .text-body-secondary,
+.app-footer {
+  color: var(--fit-muted) !important;
+}
+
+.app-content .card-header:not(.bg-primary):not(.bg-success):not(.bg-info):not(.bg-warning):not(.bg-danger),
+.app-content-header h1,
+.app-content-header h2,
+.app-content .card-body h1:not(.text-white),
+.app-content .card-body h2:not(.text-white),
+.app-content .card-body h3:not(.text-white),
+.app-content .card-body h4:not(.text-white),
+.app-content .card-body h5:not(.text-white),
+.app-content .card-body h6:not(.text-white) {
+  color: var(--fit-ink) !important;
+}
