@@ -68,6 +68,7 @@ def _fallback_coach_reply(question):
             "post workout",
             "after training",
             "after exercise",
+            "after a workout",
         ]
     ):
         return (

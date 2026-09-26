@@ -1,11 +1,22 @@
 import json
 from unittest.mock import patch
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
 
 class AiCoachTests(TestCase):
+    def setUp(self):
+        user_model = get_user_model()
+        user = user_model.objects.create_user(
+            username="coach-test-user",
+            email="coach-test@example.com",
+            phone="1234567890",
+            password="TestPassword!42",
+        )
+        self.client.force_login(user)
+
     def test_ai_coach_page_loads(self):
         response = self.client.get(reverse('ai_coach'))
         self.assertEqual(response.status_code, 200)
