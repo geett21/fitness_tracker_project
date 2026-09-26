@@ -42,17 +42,18 @@ _load_env_file()
 # SECURITY
 # =========================================================
 
-DEBUG = os.environ.get("DEBUG", "True") == "True"
+DEBUG = os.environ.get("DEBUG", "False").strip().lower() in {"1", "true", "yes", "on"}
 SECRET_KEY = os.environ.get("SECRET_KEY", "")
 if not SECRET_KEY or SECRET_KEY.lower().startswith("replace-with-"):
     raise ImproperlyConfigured("Set SECRET_KEY in the environment or local .env file.")
 
+allowed_hosts_value = os.environ.get("ALLOWED_HOSTS", "")
+if not allowed_hosts_value and DEBUG:
+    allowed_hosts_value = "localhost,127.0.0.1,testserver"
+
 ALLOWED_HOSTS = [
     host.strip()
-    for host in os.environ.get(
-        "ALLOWED_HOSTS",
-        "localhost,127.0.0.1,192.168.1.70,testserver",
-    ).split(",")
+    for host in allowed_hosts_value.split(",")
     if host.strip()
 ]
 
@@ -63,9 +64,16 @@ if os.environ.get("RENDER"):
     if render_hostname:
         ALLOWED_HOSTS.append(render_hostname)
 
+if not DEBUG and not ALLOWED_HOSTS:
+    raise ImproperlyConfigured("Set ALLOWED_HOSTS to your production domain(s).")
+
 EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND",
-    "django.core.mail.backends.smtp.EmailBackend",
+    (
+        "django.core.mail.backends.console.EmailBackend"
+        if DEBUG
+        else "django.core.mail.backends.smtp.EmailBackend"
+    ),
 )
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 FEEDBACK_EMAIL = os.environ.get("FEEDBACK_EMAIL", DEFAULT_FROM_EMAIL)

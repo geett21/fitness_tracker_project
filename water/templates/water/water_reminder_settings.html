@@ -7,7 +7,7 @@
     <div class="card shadow-sm">
       <div class="card-header"><h2 class="card-title mb-0">Set your water goal and reminders</h2></div>
       <div class="card-body">
-        <p class="text-secondary">Choose your daily water goal and when you want reminders. Browser notifications work while you are signed in and have this site open.</p>
+        <p class="text-secondary">Choose your daily water goal and reminder schedule. Reminders run in this browser while you are signed in and this site stays open; they do not run after you close the site. Allow notifications in your browser to see alerts.</p>
         {% if messages %}{% for message in messages %}<div class="alert alert-success">{{ message }}</div>{% endfor %}{% endif %}
         <div class="alert {% if reminders_enabled %}alert-success{% else %}alert-secondary{% endif %}" role="status">
           {% if reminders_enabled %}Water reminders are enabled for this account. Allow notifications in this browser to see alerts.{% else %}Water reminders are currently off.{% endif %}
@@ -34,7 +34,7 @@
             <button type="button" class="btn btn-outline-primary" id="enable-water-notifications">Allow browser notifications</button>
             <a href="{% url 'water_list' %}" class="btn btn-outline-secondary">Back to Water</a>
           </div>
-          <p class="small text-secondary mt-3 mb-0" id="water-notification-permission" aria-live="polite">Allow browser notifications to receive reminders. They will not appear if the browser blocks notifications.</p>
+          <p class="small text-secondary mt-3 mb-0" id="water-notification-permission" aria-live="polite">Allow browser notifications to receive alerts while this site is open. Background notifications require a push notification service, which this project does not have configured.</p>
         </form>
       </div>
     </div>

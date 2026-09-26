@@ -92,14 +92,14 @@
         if (data.remaining <= 0) return;
 
         var friendlyMessages = [
-          "Hey! It's time to drink some water 💙",
-          "Stay hydrated and take a refreshing water break 😊",
-          "A little sip can help you stay on track 💧"
+          "Hey! It is time to drink some water.",
+          "Stay hydrated and take a refreshing water break.",
+          "A little sip can help you stay on track."
         ];
         var messageIndex = Number(localStorage.getItem("fittrack-water-message-index") || 0);
         var body = friendlyMessages[messageIndex % friendlyMessages.length] + " You have " + data.remaining.toFixed(2) + " L left to reach your goal.";
         localStorage.setItem("fittrack-water-message-index", String(messageIndex + 1));
-        new Notification("💧 Water Break!", {
+        new Notification("Water Break!", {
           body: body,
           tag: "fittrack-water-goal-reminder",
           renotify: false
