@@ -1,6 +1,16 @@
 {% extends "base.html" %}
+{% block extra_css %}
+<style>
+  .app-content .my-workouts-card .table tbody td {
+    color: #111827 !important;
+  }
+  .app-content .my-workouts-card .table thead th {
+    color: #164e63 !important;
+  }
+</style>
+{% endblock %}
 {% block content %}
-<div class="card shadow">
+<div class="card shadow my-workouts-card">
 <div class="card-header bg-primary text-white">
 
     <div class="row align-items-center">

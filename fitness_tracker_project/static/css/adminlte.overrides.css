@@ -632,3 +632,75 @@ body,
   background-color: #d5f1ec !important;
   color: #134e4a !important;
 }
+
+/* Targeted contrast fixes for the recovery text and workout category menu. */
+.recovery-description {
+  color: #344054 !important;
+  opacity: 1 !important;
+}
+
+.workout-form select,
+.workout-form select option {
+  color: #1f2937 !important;
+  background-color: #ffffff !important;
+}
+
+.daily-workout-card .card-header .text-white-50 {
+  color: #172554 !important;
+  opacity: 1 !important;
+}
+
+.daily-workout-card .table tbody td {
+  color: #111827 !important;
+}
+
+/* Readable defaults for the light cards, tables, and forms used across pages. */
+.app-content .card-body {
+  color: #1f2937;
+}
+
+.app-content .text-muted,
+.app-content .text-secondary,
+.app-content .text-body-secondary {
+  color: #344054 !important;
+  opacity: 1 !important;
+}
+
+.app-content .card-header:not(.bg-primary):not(.bg-success):not(.bg-info):not(.bg-warning):not(.bg-danger) .text-white,
+.app-content .card-header:not(.bg-primary):not(.bg-success):not(.bg-info):not(.bg-warning):not(.bg-danger) .text-white-50,
+.app-content .card-header:not(.bg-primary):not(.bg-success):not(.bg-info):not(.bg-warning):not(.bg-danger) .text-white-75 {
+  color: #172554 !important;
+  opacity: 1 !important;
+}
+
+.app-content .card-header:not(.bg-primary):not(.bg-success):not(.bg-info):not(.bg-warning):not(.bg-danger) {
+  color: #172554 !important;
+}
+
+.app-content .table tbody td {
+  color: #111827 !important;
+}
+
+.app-content .table tbody td small,
+.app-content .table tbody td .text-muted {
+  color: #344054 !important;
+}
+
+.app-content select,
+.app-content select option {
+  color: #1f2937 !important;
+  background-color: #ffffff !important;
+  color-scheme: light;
+}
+
+.app-content .btn-outline-danger {
+  color: #b42318 !important;
+  border-color: #b42318 !important;
+  background-color: #ffffff !important;
+}
+
+.app-content input::placeholder,
+.app-content textarea::placeholder {
+  color: #52616b !important;
+  opacity: 1 !important;
+}

@@ -1,11 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth import get_user_model
-
-
-User = get_user_model()
-
-
 class Workout(models.Model):
 
     user = models.ForeignKey(
@@ -50,14 +44,7 @@ class Workout(models.Model):
 
 
     name = models.CharField(
-    max_length=100,
-    choices=WORKOUT_NAMES
-)
-    
-
-    name = models.CharField(
         max_length=100,
-
     )
 
 

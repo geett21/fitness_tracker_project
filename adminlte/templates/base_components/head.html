@@ -1,8 +1,6 @@
 {% load static %}
 
-<head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>{% block title %}FitTrack | Your health dashboard{% endblock %}</title>
 
   <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
   <script>
@@ -64,7 +62,7 @@
 
   <!--begin::Required Plugin(AdminLTE)-->
   <link rel="stylesheet" href="{% static 'css/adminlte.css' %}">
-  <link rel="stylesheet" href="{% static 'css/adminlte.overrides.css' %}">
+  <link rel="stylesheet" href="{% static 'css/adminlte.overrides.css' %}?v=readable-contrast-2">
   <!--end::Required Plugin(AdminLTE)-->
 
   <!-- apexcharts -->
@@ -74,6 +72,3 @@
   <!-- jsvectormap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
     integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
-
-  {% block extra_css %}{% endblock %}
-</head>

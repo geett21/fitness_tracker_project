@@ -64,14 +64,22 @@
         </li>
 
         <li class="nav-item"><a href="{% url 'water_list' %}" class="nav-link {% if '/water/' in request.path %}active{% endif %}"><span class="me-2">💧</span><p>Water</p></a></li>
-        <li class="nav-item"><a href="{% url 'weight_list' %}" class="nav-link {% if '/weight/' in request.path %}active{% endif %}"><span class="me-2">⚖️</span><p>Weight</p></a></li>
+        <li class="nav-item {% if '/weight/' in request.path %}menu-open{% endif %}">
+          <a href="{% url 'weight_list' %}" class="nav-link {% if '/weight/' in request.path %}active{% endif %}"><span class="me-2">⚖️</span><p>Weight <i class="nav-arrow bi bi-chevron-right"></i></p></a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="{% url 'weight_list' %}" class="nav-link {% if request.path == '/weight/' %}active{% endif %}"><i class="nav-icon bi bi-circle"></i><p>Weight Tracker</p></a></li>
+            <li class="nav-item"><a href="{% url 'step_tracker' %}" class="nav-link {% if request.resolver_match.url_name == 'step_tracker' %}active{% endif %}"><i class="nav-icon bi bi-circle"></i><p>Step Tracker</p></a></li>
+            <li class="nav-item"><a href="{% url 'sleep_tracker' %}" class="nav-link {% if request.resolver_match.url_name == 'sleep_tracker' %}active{% endif %}"><i class="nav-icon bi bi-circle"></i><p>Sleep Tracker</p></a></li>
+            <li class="nav-item"><a href="{% url 'bmi_calculator' %}" class="nav-link {% if request.resolver_match.url_name == 'bmi_calculator' %}active{% endif %}"><i class="nav-icon bi bi-circle"></i><p>BMI Calculator</p></a></li>
+          </ul>
+        </li>
         <li class="nav-item"><a href="{% url 'reports:dashboard' %}" class="nav-link {% if '/reports/' in request.path %}active{% endif %}"><span class="me-2">📄</span><p>Reports</p></a></li>
         <li class="nav-item"><a href="{% url 'notifications_page' %}" class="nav-link {% if '/notifications/' in request.path %}active{% endif %}"><span class="me-2">🔔</span><p>Notifications</p></a></li>
         <li class="nav-item"><a href="{% url 'feedback_page' %}" class="nav-link {% if '/feedback/' in request.path %}active{% endif %}"><span class="me-2">💬</span><p>Feedback</p></a></li>
         <li class="nav-item"><a href="{% url 'settings_page' %}" class="nav-link {% if '/settings/' in request.path %}active{% endif %}"><span class="me-2">⚙️</span><p>Settings</p></a></li>
         <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link {% if '/profile/' in request.path %}active{% endif %}"><span class="me-2">👤</span><p>Profile</p></a></li>
 
-        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link text-danger"><span class="me-2">🚪</span><p>Logout</p></a></li>
+        {% if user.is_authenticated %}<li class="nav-item"><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="nav-link text-danger border-0 bg-transparent w-100 text-start"><span class="me-2">🚪</span><p>Logout</p></button></form></li>{% endif %}
       </ul>
     </nav>
   </div>

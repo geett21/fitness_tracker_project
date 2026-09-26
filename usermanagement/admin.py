@@ -17,7 +17,6 @@ class CustomUserAdmin(UserAdmin):
         ('Additional Information', {
             'fields': (
                 'phone',
-                'address',
                 'gender',
             )
         }),
@@ -27,7 +26,6 @@ class CustomUserAdmin(UserAdmin):
         ('Additional Information', {
             'fields': (
                 'phone',
-                'address',
                 'gender',
             )
         }),

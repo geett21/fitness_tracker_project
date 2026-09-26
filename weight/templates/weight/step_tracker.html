@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Step Tracker{% endblock %}
+{% block page_title %}Step Tracker{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title">
+                    <i class="bi bi-person-walking"></i>
+                    Enter Steps
+                </h3>
+            </div>
+            <div class="card-body">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="steps" class="form-label">Enter Steps:</label>
+                        <input type="number" class="form-control" id="steps" name="steps" min="0" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Add Steps</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow mt-4">
+            <div class="card-header">
+                <h3 class="card-title">My Step Records</h3>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-bordered table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Steps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in steps %}
+                            <tr>
+                                <td>{{ item.step_date }}</td>
+                                <td>{{ item.steps }} steps</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="2" class="text-center">No step records yet.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

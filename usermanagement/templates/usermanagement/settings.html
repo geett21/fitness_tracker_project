@@ -23,6 +23,8 @@
 			<div class="card-body">
 				<i class="bi bi-person-gear text-primary fs-2"></i>
 				<h2 class="h5 mt-3">Profile settings</h2>
+				<p class="text-secondary mb-1">Signed in as {{ request.user.get_full_name|default:request.user.username }}</p>
+				<p class="text-secondary">{{ request.user.email|default:'No email address added' }}</p>
 				<p class="text-secondary">Update your name, email, phone, gender and profile image.</p>
 				<a class="btn btn-primary" href="{% url 'profile' %}"><i class="bi bi-person me-1"></i> Open profile</a>
 			</div>

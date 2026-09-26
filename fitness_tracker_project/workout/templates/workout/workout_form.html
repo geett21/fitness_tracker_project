@@ -2,88 +2,549 @@
 
 {% block content %}
 
-<div class="container-fluid mt-4">
+<style>
+/* =========================================
+   WORKOUT CARD
+   ========================================= */
 
-    <div class="card shadow">
+.workout-card {
+    max-width: 900px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: visible !important;
+}
 
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">
-                🏋️ Add Workout
-            </h3>
+.workout-card .card-header {
+    background: #117a72 !important;
+    color: #ffffff !important;
+    padding: 20px 25px;
+}
+
+.workout-card .card-header h3 {
+    margin: 0;
+    color: #ffffff !important;
+}
+
+.workout-form {
+    padding: 30px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #14506b !important;
+}
+
+
+/* =========================================
+   CUSTOM DROPDOWN
+   ========================================= */
+
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+
+/* Closed dropdown */
+
+.dropdown-button {
+    width: 100%;
+    height: 48px;
+    padding: 10px 15px;
+
+    background: #ffffff !important;
+    color: #000000 !important;
+
+    border: 2px solid #b9eeee !important;
+    border-radius: 10px;
+
+    font-size: 16px;
+    text-align: left;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown-button:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-color: #20cfc3 !important;
+}
+
+.dropdown-arrow {
+    color: #000000 !important;
+}
+
+
+/* =========================================
+   OPEN DROPDOWN
+   ========================================= */
+
+.dropdown-menu-custom {
+    display: none;
+
+    position: absolute;
+    top: 53px;
+    left: 0;
+
+    width: 100%;
+    max-height: 260px;
+    overflow-y: auto;
+
+    background: #ffffff !important;
+    color: #000000 !important;
+
+    border: 1px solid #cccccc !important;
+    border-radius: 10px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+
+    z-index: 999999 !important;
+}
+
+.dropdown-menu-custom.show {
+    display: block !important;
+}
+
+
+/* =========================================
+   DROPDOWN OPTIONS
+   WHITE BACKGROUND + BLACK TEXT
+   ========================================= */
+
+.dropdown-option {
+    display: block !important;
+
+    width: 100% !important;
+
+    padding: 12px 15px !important;
+
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+
+    color: #000000 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    font-size: 16px !important;
+    font-weight: 400 !important;
+
+    text-align: left !important;
+
+    cursor: pointer !important;
+
+    box-shadow: none !important;
+}
+
+
+/* Hover */
+
+.dropdown-option:hover,
+.dropdown-option:focus,
+.dropdown-option:active {
+    background: #e7f1ff !important;
+    background-color: #e7f1ff !important;
+
+    color: #000000 !important;
+
+    outline: none !important;
+}
+
+
+/* =========================================
+   NORMAL INPUTS
+   ========================================= */
+
+.workout-input {
+    width: 100%;
+    height: 48px;
+
+    padding: 10px 14px;
+
+    background: #ffffff !important;
+    color: #000000 !important;
+
+    border: 2px solid #b9eeee !important;
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+.workout-input:focus {
+    background: #ffffff !important;
+    color: #000000 !important;
+
+    border-color: #20cfc3 !important;
+
+    box-shadow: 0 0 0 3px rgba(32, 207, 195, 0.20);
+}
+
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.save-workout-btn {
+    background: #0d6efd !important;
+    color: #ffffff !important;
+
+    border: none !important;
+    border-radius: 8px;
+
+    padding: 11px 22px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.save-workout-btn:hover {
+    background: #0b5ed7 !important;
+    color: #ffffff !important;
+}
+
+.back-workout-btn {
+    margin-left: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+}
+
+
+/* =========================================
+   SCROLLBAR
+   ========================================= */
+
+.dropdown-menu-custom::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dropdown-menu-custom::-webkit-scrollbar-track {
+    background: #ffffff !important;
+}
+
+.dropdown-menu-custom::-webkit-scrollbar-thumb {
+    background: #cccccc !important;
+    border-radius: 10px;
+}
+</style>
+
+
+<div class="container-fluid">
+
+    <div class="card shadow workout-card">
+
+        <!-- HEADER -->
+        <div class="card-header">
+            <h3>🏋️ Add Workout</h3>
         </div>
 
 
-        <div class="card-body">
+        <div class="card-body workout-form">
 
             <form method="POST">
 
                 {% csrf_token %}
 
-
                 <div class="row">
 
-                    <div class="col-md-6 mb-3">
+
+                    <!-- =====================================
+                         WORKOUT NAME
+                         ===================================== -->
+
+                    <div class="col-md-6 mb-4">
+
                         <label class="form-label">
                             Workout Name
                         </label>
 
-                        {{ form.name }}
+                        <div class="custom-dropdown">
+
+                            <button
+                                type="button"
+                                class="dropdown-button"
+                                id="workoutButton"
+                            >
+                                <span id="workoutSelected">
+                                    Select Workout
+                                </span>
+
+                                <span class="dropdown-arrow">
+                                    ▼
+                                </span>
+                            </button>
+
+
+                            <div
+                                id="workoutMenu"
+                                class="dropdown-menu-custom"
+                                style="
+                                    background-color: #ffffff !important;
+                                    color: #000000 !important;
+                                "
+                            >
+
+                                {% for value, label in form.name.field.choices %}
+
+                                <button
+                                    type="button"
+                                    class="dropdown-option"
+                                    data-value="{{ value }}"
+                                    data-label="{{ label }}"
+                                    style="
+                                        background-color: #ffffff !important;
+                                        color: #000000 !important;
+                                    "
+                                >
+                                    {{ label }}
+                                </button>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <input
+                            type="hidden"
+                            name="name"
+                            id="workoutInput"
+                            value="{{ form.name.value|default:'' }}"
+                        >
+
                     </div>
 
 
-                    <div class="col-md-6 mb-3">
+
+                    <!-- =====================================
+                         AGE
+                         ===================================== -->
+
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label">
+                            Age
+                        </label>
+
+                        <div class="custom-dropdown">
+
+                            <button
+                                type="button"
+                                class="dropdown-button"
+                                id="ageButton"
+                            >
+                                <span id="ageSelected">
+                                    Select Age
+                                </span>
+
+                                <span class="dropdown-arrow">
+                                    ▼
+                                </span>
+                            </button>
+
+
+                            <div
+                                id="ageMenu"
+                                class="dropdown-menu-custom"
+                                style="
+                                    background-color: #ffffff !important;
+                                    color: #000000 !important;
+                                "
+                            >
+
+                                {% for value, label in form.age.field.choices %}
+
+                                <button
+                                    type="button"
+                                    class="dropdown-option"
+                                    data-value="{{ value }}"
+                                    data-label="{{ label }}"
+                                    style="
+                                        background-color: #ffffff !important;
+                                        color: #000000 !important;
+                                    "
+                                >
+                                    {{ label }}
+                                </button>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <input
+                            type="hidden"
+                            name="age"
+                            id="ageInput"
+                            value="{{ form.age.value|default:'' }}"
+                        >
+
+                    </div>
+
+
+
+                    <!-- =====================================
+                         CATEGORY
+                         ===================================== -->
+
+                    <div class="col-md-6 mb-4">
+
                         <label class="form-label">
                             Category
                         </label>
 
-                        {{ form.category }}
+                        <div class="custom-dropdown">
+
+                            <button
+                                type="button"
+                                class="dropdown-button"
+                                id="categoryButton"
+                            >
+                                <span id="categorySelected">
+                                    Select Category
+                                </span>
+
+                                <span class="dropdown-arrow">
+                                    ▼
+                                </span>
+                            </button>
+
+
+                            <div
+                                id="categoryMenu"
+                                class="dropdown-menu-custom"
+                                style="
+                                    background-color: #ffffff !important;
+                                    color: #000000 !important;
+                                "
+                            >
+
+                                {% for value, label in form.category.field.choices %}
+
+                                <button
+                                    type="button"
+                                    class="dropdown-option"
+                                    data-value="{{ value }}"
+                                    data-label="{{ label }}"
+                                    style="
+                                        background-color: #ffffff !important;
+                                        color: #000000 !important;
+                                    "
+                                >
+                                    {{ label }}
+                                </button>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <input
+                            type="hidden"
+                            name="category"
+                            id="categoryInput"
+                            value="{{ form.category.value|default:'' }}"
+                        >
+
                     </div>
 
 
-                    <div class="col-md-6 mb-3">
+
+                    <!-- =====================================
+                         DURATION
+                         ===================================== -->
+
+                    <div class="col-md-6 mb-4">
+
                         <label class="form-label">
                             Duration (Minutes)
                         </label>
 
-                        {{ form.duration }}
+                        <input
+                            type="number"
+                            name="duration"
+                            class="workout-input"
+                            min="1"
+                            placeholder="Enter duration"
+                            value="{{ form.duration.value|default:'' }}"
+                            required
+                        >
+
                     </div>
 
 
-                    <div class="col-md-6 mb-3">
+
+                    <!-- =====================================
+                         CALORIES
+                         ===================================== -->
+
+                    <div class="col-md-6 mb-4">
+
                         <label class="form-label">
                             Calories Burned
                         </label>
 
-                        {{ form.calories_burned }}
+                        <input
+                            type="number"
+                            name="calories_burned"
+                            class="workout-input"
+                            min="0"
+                            placeholder="Enter calories"
+                            value="{{ form.calories_burned.value|default:'' }}"
+                            required
+                        >
+
                     </div>
-
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Date
-                        </label>
-
-                        {{ form.date }}
-                    </div>
-
 
                 </div>
 
 
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i>
-                    Save Workout
-                </button>
+                <!-- ERRORS -->
+
+                {% if form.errors %}
+
+                <div class="alert alert-danger">
+                    <strong>Please correct the errors above.</strong>
+                    {{ form.errors }}
+                </div>
+
+                {% endif %}
 
 
-                <a href="{% url 'workout_list' %}" 
-                   class="btn btn-secondary">
-                    Back
-                </a>
+                <!-- BUTTONS -->
 
+                <div class="mt-2">
+
+                    <button
+                        type="submit"
+                        class="save-workout-btn"
+                    >
+                        💾 Save Workout
+                    </button>
+
+                    <a
+                        href="{% url 'workout_list' %}"
+                        class="btn btn-secondary back-workout-btn"
+                    >
+                        Back
+                    </a>
+
+                </div>
 
             </form>
-
 
         </div>
 
@@ -91,5 +552,261 @@
 
 </div>
 
+
+<script>
+
+/* =========================================
+   HELPER
+   ========================================= */
+
+function closeAllDropdowns() {
+
+    document
+        .querySelectorAll(".dropdown-menu-custom")
+        .forEach(function(menu) {
+
+            menu.classList.remove("show");
+
+        });
+
+}
+
+
+/* =========================================
+   WORKOUT
+   ========================================= */
+
+document
+    .getElementById("workoutButton")
+    .addEventListener("click", function(event) {
+
+        event.stopPropagation();
+
+        const menu =
+            document.getElementById("workoutMenu");
+
+        closeAllDropdowns();
+
+        menu.classList.add("show");
+
+    });
+
+
+document
+    .querySelectorAll("#workoutMenu .dropdown-option")
+    .forEach(function(option) {
+
+        option.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            document.getElementById("workoutInput").value =
+                this.dataset.value;
+
+            document.getElementById("workoutSelected").textContent =
+                this.dataset.label;
+
+            document
+                .getElementById("workoutMenu")
+                .classList.remove("show");
+
+        });
+
+    });
+
+
+/* =========================================
+   AGE
+   ========================================= */
+
+document
+    .getElementById("ageButton")
+    .addEventListener("click", function(event) {
+
+        event.stopPropagation();
+
+        const menu =
+            document.getElementById("ageMenu");
+
+        closeAllDropdowns();
+
+        menu.classList.add("show");
+
+    });
+
+
+document
+    .querySelectorAll("#ageMenu .dropdown-option")
+    .forEach(function(option) {
+
+        option.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            document.getElementById("ageInput").value =
+                this.dataset.value;
+
+            document.getElementById("ageSelected").textContent =
+                this.dataset.label;
+
+            document
+                .getElementById("ageMenu")
+                .classList.remove("show");
+
+        });
+
+    });
+
+
+/* =========================================
+   CATEGORY
+   ========================================= */
+
+document
+    .getElementById("categoryButton")
+    .addEventListener("click", function(event) {
+
+        event.stopPropagation();
+
+        const menu =
+            document.getElementById("categoryMenu");
+
+        closeAllDropdowns();
+
+        menu.classList.add("show");
+
+    });
+
+
+document
+    .querySelectorAll("#categoryMenu .dropdown-option")
+    .forEach(function(option) {
+
+        option.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            document.getElementById("categoryInput").value =
+                this.dataset.value;
+
+            document.getElementById("categorySelected").textContent =
+                this.dataset.label;
+
+            document
+                .getElementById("categoryMenu")
+                .classList.remove("show");
+
+        });
+
+    });
+
+
+/* =========================================
+   CLICK OUTSIDE
+   ========================================= */
+
+document.addEventListener("click", function() {
+
+    closeAllDropdowns();
+
+});
+
+
+/* =========================================
+   EDIT PAGE VALUES
+   ========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const workoutValue =
+            document.getElementById("workoutInput").value;
+
+        const ageValue =
+            document.getElementById("ageInput").value;
+
+        const categoryValue =
+            document.getElementById("categoryInput").value;
+
+
+        if (workoutValue) {
+
+            document
+                .querySelectorAll(
+                    "#workoutMenu .dropdown-option"
+                )
+                .forEach(function(option) {
+
+                    if (
+                        option.dataset.value ===
+                        workoutValue
+                    ) {
+
+                        document.getElementById(
+                            "workoutSelected"
+                        ).textContent =
+                            option.dataset.label;
+
+                    }
+
+                });
+
+        }
+
+
+        if (ageValue) {
+
+            document
+                .querySelectorAll(
+                    "#ageMenu .dropdown-option"
+                )
+                .forEach(function(option) {
+
+                    if (
+                        option.dataset.value ===
+                        ageValue
+                    ) {
+
+                        document.getElementById(
+                            "ageSelected"
+                        ).textContent =
+                            option.dataset.label;
+
+                    }
+
+                });
+
+        }
+
+
+        if (categoryValue) {
+
+            document
+                .querySelectorAll(
+                    "#categoryMenu .dropdown-option"
+                )
+                .forEach(function(option) {
+
+                    if (
+                        option.dataset.value ===
+                        categoryValue
+                    ) {
+
+                        document.getElementById(
+                            "categorySelected"
+                        ).textContent =
+                            option.dataset.label;
+
+                    }
+
+                });
+
+        }
+
+    }
+);
+
+</script>
 
 {% endblock %}

@@ -1,6 +1,8 @@
 from datetime import date
+from math import isfinite
 
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .models import FoodDiary, NutritionTip
@@ -18,34 +20,40 @@ def calorie_calculator(request):
             age = int(request.POST.get("age", ""))
             activity = float(request.POST.get("activity", ""))
 
-            if weight <= 0 or height <= 0 or age <= 0:
+            if (
+                not all(isfinite(value) for value in (weight, height, activity))
+                or weight <= 0
+                or height <= 0
+                or age <= 0
+                or activity not in (1.2, 1.5, 1.7)
+            ):
                 raise ValueError
 
             # Mifflin-St Jeor equation (male baseline; no sex input exists yet).
             bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5
             calories = round(bmr * activity)
         except (TypeError, ValueError):
-            error = "Enter valid positive values for weight, height, and age."
+            error = "Enter valid positive values and choose an activity level."
 
     return render(request, "nutrition/calorie_calculator.html", {
         "calories": calories,
         "error": error,
     })
 
+@login_required
 def food_diary(request):
 
     if request.method == "POST":
         form = FoodDiaryForm(request.POST)
         if form.is_valid():
             food_entry = form.save(commit=False)
-            if request.user.is_authenticated:
-                food_entry.user = request.user
+            food_entry.user = request.user
             food_entry.save()
             return redirect("food_diary")
     else:
         form = FoodDiaryForm()
 
-    foods = FoodDiary.objects.order_by("-date", "-id")
+    foods = FoodDiary.objects.filter(user=request.user).order_by("-date", "-id")
     totals = foods.filter(date=date.today()).aggregate(
         total_calories=Sum("calories"),
         total_protein=Sum("protein"),
@@ -158,8 +166,9 @@ def nutrition_home(request):
         "nutrition/nutrition_home.html"
     )
 
+@login_required
 def macro_tracker(request):
-    totals = FoodDiary.objects.filter(date=date.today()).aggregate(
+    totals = FoodDiary.objects.filter(user=request.user, date=date.today()).aggregate(
         protein=Sum("protein"),
         carbs=Sum("carbs"),
         fats=Sum("fats"),

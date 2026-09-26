@@ -1,9 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth import get_user_model
-
-
-User = get_user_model()
 
 
 class Workout(models.Model):
@@ -21,7 +17,6 @@ class Workout(models.Model):
         ("Yoga", "Yoga"),
         ("Other", "Other"),
     )
-
 
     WORKOUT_NAMES = (
         ("Running", "Running"),
@@ -48,41 +43,33 @@ class Workout(models.Model):
         ("Meditation", "Meditation"),
     )
 
-
-    name = models.CharField(
-    max_length=100,
-    choices=WORKOUT_NAMES
-)
-    
-
     name = models.CharField(
         max_length=100,
-
+        choices=WORKOUT_NAMES
     )
-
 
     category = models.CharField(
         max_length=50,
         choices=CATEGORY
     )
 
+    age = models.PositiveIntegerField(
+    null=True,
+    blank=True
+    )
 
     duration = models.PositiveIntegerField(
         help_text="Minutes"
     )
 
-
     calories_burned = models.PositiveIntegerField()
-
 
     date = models.DateField(
         auto_now_add=True
     )
 
-
     def __str__(self):
         return self.name
-
 
 
 class Exercise(models.Model):
@@ -91,21 +78,16 @@ class Exercise(models.Model):
         max_length=100
     )
 
-
     muscle = models.CharField(
         max_length=100
     )
 
-
     duration = models.PositiveIntegerField()
-
 
     calories = models.PositiveIntegerField()
 
-
     def __str__(self):
         return self.name
-
 
 
 class Yoga(models.Model):
@@ -114,17 +96,13 @@ class Yoga(models.Model):
         max_length=100
     )
 
-
     level = models.CharField(
         max_length=50
     )
 
-
     duration = models.PositiveIntegerField()
 
-
     benefits = models.TextField()
-
 
     def __str__(self):
         return self.name

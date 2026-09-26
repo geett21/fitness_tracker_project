@@ -6,188 +6,210 @@ Fitness Dashboard
 {% endblock %}
 
 
-
 {% block content %}
-
 
 <div class="row">
 
+    <!-- Welcome Card -->
+    <div class="col-md-12">
 
-<!-- Welcome Card -->
+        <div class="card bg-primary text-white shadow">
 
-<div class="col-md-12">
+            <div class="card-body">
 
-<div class="card bg-primary text-white shadow">
+                <h2>
+                    👋 Welcome {{ request.user.username }}
+                </h2>
 
-<div class="card-body">
+                <p>
+                    Track your fitness journey every day.
+                </p>
 
-<h2>
-👋 Welcome {{ request.user.username }}
-</h2>
+            </div>
 
-<p>
-Track your fitness journey every day.
-</p>
+        </div>
 
-</div>
-
-</div>
-
-</div>
+    </div>
 
 
+    <!-- Weight -->
+    <div class="col-md-3">
 
-<!-- Weight -->
+        <div class="card shadow">
 
-<div class="col-md-3">
+            <div class="card-body text-center">
 
-<div class="card shadow">
+                <h3>⚖️</h3>
 
-<div class="card-body text-center">
+                <h5>Weight</h5>
 
-<h3>
-⚖️
-</h3>
+                <h2>
+                    {{ weight }} kg
+                </h2>
 
-<h5>
-Weight
-</h5>
+            </div>
 
-<h2>
-{{ weight }} kg
-</h2>
+        </div>
 
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 
+    <!-- Water -->
+    <div class="col-md-3">
+
+        <div class="card shadow">
+
+            <div class="card-body text-center">
+
+                <h3>💧</h3>
+
+                <h5>Water</h5>
+
+                <h2>
+                    {{ water }} L
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
-<!-- Water -->
+    <!-- Workout -->
+    <div class="col-md-3">
 
-<div class="col-md-3">
+        <div class="card shadow">
 
-<div class="card shadow">
+            <div class="card-body text-center">
 
-<div class="card-body text-center">
+                <h3>🏋️</h3>
 
-<h3>
-💧
-</h3>
+                <h5>Workout</h5>
 
-<h5>
-Water
-</h5>
+                <h2>
+                    {{ workout }}
+                </h2>
 
-<h2>
-{{ water }} L
-</h2>
+            </div>
 
-</div>
+        </div>
 
-</div>
-
-</div>
+    </div>
 
 
+    <!-- Goal -->
+    <div class="col-md-3">
 
+        <div class="card shadow">
 
+            <div class="card-body text-center">
 
-<!-- Workout -->
+                <h3>🎯</h3>
 
-<div class="col-md-3">
+                <h5>Goal</h5>
 
-<div class="card shadow">
+                <h2>
+                    {{ goal }}
+                </h2>
 
-<div class="card-body text-center">
+            </div>
 
-<h3>
-🏋️
-</h3>
+        </div>
 
-<h5>
-Workout
-</h5>
-
-<h2>
-{{ workout }}
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-
-
-<!-- Goal -->
-
-<div class="col-md-3">
-
-<div class="card shadow">
-
-<div class="card-body text-center">
-
-<h3>
-🎯
-</h3>
-
-<h5>
-Goal
-</h5>
-
-<h2>
-{{ goal }}
-</h2>
-
+    </div>
 
 </div>
-
-</div>
-
-</div>
-
-
-</div>
-
 
 
 <br>
 
 
+<!-- Step & Sleep Tracker -->
+
+<div class="row mt-4">
+
+    <!-- Step Tracker -->
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-body text-center">
+
+                <h3>👣</h3>
+
+                <h5>Step Tracker</h5>
+
+                <p>
+                    Track your daily steps.
+                </p>
+
+                <a href="{% url 'step_tracker' %}"
+                   class="btn btn-primary">
+                    Track Steps
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Sleep Tracker -->
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-body text-center">
+
+                <h3>😴</h3>
+
+                <h5>Sleep Tracker</h5>
+
+                <p>
+                    Track your sleep hours.
+                </p>
+
+                <a href="{% url 'sleep_tracker' %}"
+                   class="btn btn-info">
+                    Track Sleep
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<br>
+
+
+<!-- Progress Overview -->
+
 <div class="card shadow">
 
+    <div class="card-header bg-info text-white">
 
-<div class="card-header bg-info text-white">
+        <h4>
+            📈 Progress Overview
+        </h4>
 
-<h4>
-📈 Progress Overview
-</h4>
-
-</div>
-
-
-<div class="card-body">
+    </div>
 
 
-<p class="text-center">
-Your fitness progress chart will appear here.
-</p>
+    <div class="card-body">
 
+        <p class="text-center">
+            Your fitness progress chart will appear here.
+        </p>
 
-</div>
-
+    </div>
 
 </div>
-
-
 
 
 {% endblock %}

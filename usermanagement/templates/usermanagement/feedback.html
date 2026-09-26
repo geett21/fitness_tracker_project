@@ -13,9 +13,13 @@
 			</div>
 			<div class="card-body p-4">
 				<div class="alert alert-light border"><i class="bi bi-info-circle text-primary me-2"></i>Your feedback helps us improve the Fitness Tracker for everyone.</div>
-				<label class="form-label" for="feedback-message">Your message</label>
-				<textarea id="feedback-message" class="form-control mb-3" rows="5" placeholder="Tell us what you think..."></textarea>
-				<a href="mailto:fitnesstracker@example.com?subject=Fitness%20Tracker%20Feedback" class="btn btn-primary"><i class="bi bi-send me-1"></i> Send feedback</a>
+				{% if messages %}{% for message in messages %}<div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}" role="status">{{ message }}</div>{% endfor %}{% endif %}
+				<form method="post">
+					{% csrf_token %}
+					<label class="form-label" for="feedback-message">Your message</label>
+					<textarea id="feedback-message" name="message" class="form-control mb-3" rows="5" maxlength="5000" required placeholder="Tell us what you think..."></textarea>
+					<button type="submit" class="btn btn-primary"><i class="bi bi-send me-1"></i> Send feedback</button>
+				</form>
 			</div>
 		</div>
 	</div>

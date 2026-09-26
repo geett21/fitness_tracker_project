@@ -15,7 +15,7 @@
 
         <div class="card-body">
 
-            <form method="POST">
+            <form method="POST" class="workout-form">
 
                 {% csrf_token %}
 
@@ -55,15 +55,6 @@
                         </label>
 
                         {{ form.calories_burned }}
-                    </div>
-
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Date
-                        </label>
-
-                        {{ form.date }}
                     </div>
 
 

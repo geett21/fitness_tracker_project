@@ -14,13 +14,28 @@ class WorkoutForm(forms.ModelForm):
         ("Cycling", "Cycling"),
         ("Yoga", "Yoga"),
         ("Push Ups", "Push Ups"),
+        ("Pull Ups", "Pull Ups"),
         ("Squats", "Squats"),
+        ("Lunges", "Lunges"),
         ("Plank", "Plank"),
         ("Jumping Jacks", "Jumping Jacks"),
         ("Burpees", "Burpees"),
-        ("HIIT", "HIIT"),
-        ("Weight Training", "Weight Training"),
+        ("Chest Workout", "Chest Workout"),
+        ("Back Workout", "Back Workout"),
+        ("Leg Workout", "Leg Workout"),
+        ("Shoulder Workout", "Shoulder Workout"),
+        ("Arm Workout", "Arm Workout"),
         ("Full Body Workout", "Full Body Workout"),
+        ("HIIT", "HIIT"),
+        ("Cardio", "Cardio"),
+        ("Weight Training", "Weight Training"),
+        ("Stretching", "Stretching"),
+        ("Meditation", "Meditation"),
+    ]
+
+    AGE_OPTIONS = [
+        (str(age), str(age))
+        for age in range(13, 31)
     ]
 
     name = forms.ChoiceField(
@@ -32,25 +47,28 @@ class WorkoutForm(forms.ModelForm):
         )
     )
 
+    age = forms.ChoiceField(
+        choices=AGE_OPTIONS,
+        required=False,
+        widget=forms.Select(
+            attrs={
+                "class": "form-control"
+            }
+        )
+    )
 
     class Meta:
         model = Workout
 
         fields = [
             "name",
+            "age",
             "category",
             "duration",
             "calories_burned",
         ]
 
         widgets = {
-
-            "name": forms.Select(
-                attrs={
-                    "class": "form-control",
-                }
-            ),
-
             "category": forms.Select(
                 attrs={
                     "class": "form-control"
@@ -60,18 +78,19 @@ class WorkoutForm(forms.ModelForm):
             "duration": forms.NumberInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Duration (Minutes)"
+                    "placeholder": "Duration (Minutes)",
+                    "min": "1"
                 }
             ),
 
             "calories_burned": forms.NumberInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Calories Burned"
+                    "placeholder": "Calories Burned",
+                    "min": "0"
                 }
             ),
         }
-
 
 
 # ==========================
@@ -91,12 +110,12 @@ class ExerciseForm(forms.ModelForm):
         ]
 
         widgets = {
+            "name": forms.Select(
+                attrs={
+                    "class": "form-control"
+                }
+            ),
 
-           "name": forms.Select(
-    attrs={
-        "class": "form-control"
-    }
-),
             "muscle": forms.TextInput(
                 attrs={
                     "class": "form-control",
@@ -107,18 +126,19 @@ class ExerciseForm(forms.ModelForm):
             "duration": forms.NumberInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Duration Minutes"
+                    "placeholder": "Duration Minutes",
+                    "min": "1"
                 }
             ),
 
             "calories": forms.NumberInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Calories"
+                    "placeholder": "Calories",
+                    "min": "0"
                 }
             ),
         }
-
 
 
 # ==========================
@@ -138,7 +158,6 @@ class YogaForm(forms.ModelForm):
         ]
 
         widgets = {
-
             "name": forms.TextInput(
                 attrs={
                     "class": "form-control",
@@ -156,14 +175,16 @@ class YogaForm(forms.ModelForm):
             "duration": forms.NumberInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Duration Minutes"
+                    "placeholder": "Duration Minutes",
+                    "min": "1"
                 }
             ),
 
             "benefits": forms.Textarea(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Benefits"
+                    "placeholder": "Benefits",
+                    "rows": "4"
                 }
             ),
         }

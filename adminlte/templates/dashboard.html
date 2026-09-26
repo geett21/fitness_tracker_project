@@ -49,13 +49,13 @@
   <div class="row g-4 mb-4">
     <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card goals h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-bullseye fs-3"></i></span><p class="stat-label mb-1 mt-3">Goals</p><h2 class="stat-value mb-0">{{ total_goals }}</h2></div></div></div>
     <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card water h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-droplet fs-3"></i></span><p class="stat-label mb-1 mt-3">Water logs</p><h2 class="stat-value mb-0">{{ total_water_entries }}</h2></div></div></div>
-    <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card steps h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-shoe-print fs-3"></i></span><p class="stat-label mb-1 mt-3">Latest steps</p><h2 class="stat-value mb-0">{{ steps_today }}</h2></div></div></div>
+    <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card steps h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-shoe-print fs-3"></i></span><p class="stat-label mb-1 mt-3">Steps today</p><h2 class="stat-value mb-0">{{ steps_today }}</h2></div></div></div>
     <div class="col-sm-6 col-xl-3"><div class="card dashboard-stat-card weight h-100 shadow-sm"><div class="card-body"><span class="stat-icon"><i class="bi bi-speedometer2 fs-3"></i></span><p class="stat-label mb-1 mt-3">Latest weight</p><h2 class="stat-value mb-0">{% if latest_weight %}{{ latest_weight }} kg{% else %}—{% endif %}</h2></div></div></div>
   </div>
 
   <div class="card border-0 shadow-sm"><div class="card-body p-4">
     <div class="d-flex justify-content-between align-items-center mb-3"><div><h4 class="mb-1">Quick actions</h4><p class="text-secondary mb-0">Add a new health entry in a few seconds.</p></div><span class="badge text-bg-primary">{{ total_workouts }} workouts logged</span></div>
-    <div class="d-flex flex-wrap gap-2"><a class="btn btn-outline-primary" href="{% url 'goal_create' %}">Add goal</a><a class="btn btn-outline-info" href="{% url 'water_create' %}">Log water</a><a class="btn btn-outline-success" href="{% url 'weight_create' %}">Log weight</a><a class="btn btn-outline-dark" href="{% url 'progress_home' %}">View progress</a></div>
+    <div class="d-flex flex-wrap gap-2"><a class="btn btn-outline-primary" href="{% url 'goal_create' %}">Add goal</a><a class="btn btn-outline-info" href="{% url 'water_create' %}">Log water</a><a class="btn btn-outline-success" href="{% url 'weight_create' %}">Log weight</a><a class="btn btn-outline-success" href="{% url 'step_tracker' %}">Log steps</a><a class="btn btn-outline-dark" href="{% url 'progress_home' %}">View progress</a></div>
   </div></div>
 </div>
 {% endblock %}

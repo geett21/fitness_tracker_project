@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Workout
 from .forms import WorkoutForm
 
@@ -6,8 +7,9 @@ from .forms import WorkoutForm
 # ==========================
 # Workout List
 # ==========================
+@login_required
 def workout_list(request):
-    workouts = Workout.objects.all().order_by("-date")
+    workouts = Workout.objects.filter(user=request.user).order_by("-date")
     return render(
         request,
         "workout/workout_list.html",
@@ -18,13 +20,13 @@ def workout_list(request):
 # ==========================
 # Add Workout
 # ==========================
+@login_required
 def workout_create(request):
     if request.method == "POST":
         form = WorkoutForm(request.POST)
         if form.is_valid():
             workout = form.save(commit=False)
-            if request.user.is_authenticated:
-                workout.user = request.user
+            workout.user = request.user
             workout.save()
             return redirect("workout_list")
     else:
@@ -40,8 +42,9 @@ def workout_create(request):
 # ==========================
 # Update Workout
 # ==========================
+@login_required
 def workout_update(request, pk):
-    workout = get_object_or_404(Workout, pk=pk)
+    workout = get_object_or_404(Workout, pk=pk, user=request.user)
 
     if request.method == "POST":
         form = WorkoutForm(request.POST, instance=workout)
@@ -61,8 +64,9 @@ def workout_update(request, pk):
 # ==========================
 # Delete Workout
 # ==========================
+@login_required
 def workout_delete(request, pk):
-    workout = get_object_or_404(Workout, pk=pk)
+    workout = get_object_or_404(Workout, pk=pk, user=request.user)
 
     if request.method == "POST":
         workout.delete()
@@ -78,8 +82,9 @@ def workout_delete(request, pk):
 # ==========================
 # Workout Detail
 # ==========================
+@login_required
 def workout_detail(request, pk):
-    workout = get_object_or_404(Workout, pk=pk)
+    workout = get_object_or_404(Workout, pk=pk, user=request.user)
 
     return render(
         request,
@@ -91,19 +96,23 @@ def workout_detail(request, pk):
 # ==========================
 # Workout Plans
 # ==========================
+@login_required
 def workout_plans(request):
     return render(request, "workout/workout_plans.html")
 
+@login_required
 def daily_workout(request):
     return render(request, "workout/daily_workout.html")
 
 
+@login_required
 def exercise_library(request):
     return render(request, "workout/excercise_library.html")
 
 
+@login_required
 def workout_history(request):
-    workouts = Workout.objects.all().order_by("-date")
+    workouts = Workout.objects.filter(user=request.user).order_by("-date")
     return render(
         request,
         "workout/workout_history.html",
@@ -111,16 +120,19 @@ def workout_history(request):
     )
 
 
+@login_required
 def yoga(request):
     return render(request, "workout/yoga.html")
 
 
+@login_required
 def workout_timer(request):
     return render(request, "workout/workout_timer.html")
 
 
+@login_required
 def calories(request):
-    workouts = Workout.objects.all()
+    workouts = Workout.objects.filter(user=request.user)
     total = sum(w.calories_burned for w in workouts)
 
     return render(

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Water Reminders | FitTrack{% endblock %}
+{% block page_title %}Water Reminders{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-header"><h2 class="card-title mb-0">Set your water goal and reminders</h2></div>
+      <div class="card-body">
+        <p class="text-secondary">Choose your daily water goal and when you want reminders. Browser notifications work while you are signed in and have this site open.</p>
+        {% if messages %}{% for message in messages %}<div class="alert alert-success">{{ message }}</div>{% endfor %}{% endif %}
+        <div class="alert {% if reminders_enabled %}alert-success{% else %}alert-secondary{% endif %}" role="status">
+          {% if reminders_enabled %}Water reminders are enabled for this account. Allow notifications in this browser to see alerts.{% else %}Water reminders are currently off.{% endif %}
+        </div>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% for field in form %}
+            {% if field.name == "enabled" %}
+              <div class="form-check form-switch mb-3">
+                {{ field }}
+                <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              </div>
+            {% else %}
+              <div class="mb-3">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+              </div>
+            {% endif %}
+            {% for error in field.errors %}<div class="text-danger small mb-2">{{ error }}</div>{% endfor %}
+          {% endfor %}
+          {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+          <div class="d-flex flex-wrap gap-2">
+            <button type="submit" class="btn btn-primary">Save water reminders</button>
+            <button type="button" class="btn btn-outline-primary" id="enable-water-notifications">Allow browser notifications</button>
+            <a href="{% url 'water_list' %}" class="btn btn-outline-secondary">Back to Water</a>
+          </div>
+          <p class="small text-secondary mt-3 mb-0" id="water-notification-permission" aria-live="polite">Allow browser notifications to receive reminders. They will not appear if the browser blocks notifications.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

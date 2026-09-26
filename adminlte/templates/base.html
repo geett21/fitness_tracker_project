@@ -1,7 +1,11 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
+  <head>
   {% include "base_components/head.html" %}
+    <title>{% block title %}FitTrack | Your health dashboard{% endblock %}</title>
+    {% block extra_css %}{% endblock %}
+  </head>
   <body class="layout-fixed sidebar-expand-md bg-body-tertiary">
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
@@ -15,7 +19,13 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-6">
-                <h1 class="mb-0 fs-3">{% block page_title %}Dashboard{% endblock %}</h1>
+                <div class="d-flex align-items-center gap-3">
+                  <a href="{% url 'dashboard' %}" id="global-back-button" class="btn btn-outline-secondary btn-sm flex-shrink-0" aria-label="Go back">
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    <span class="ms-1">Back</span>
+                  </a>
+                  <h1 class="mb-0 fs-3">{% block page_title %}Dashboard{% endblock %}</h1>
+                </div>
               </div>
               <div class="col-sm-6">
                 {% block breadcrumb %}
@@ -46,5 +56,23 @@
     <!--end::App Wrapper-->
 
     {% include "base_components/scripts.html" %}
+    {% if user.is_authenticated %}<script src="{% static 'js/water-reminders.js' %}?v=1" defer></script>{% endif %}
+    <script>
+      (function () {
+        var backButton = document.getElementById("global-back-button");
+        if (!backButton) return;
+        backButton.addEventListener("click", function (event) {
+          if (!document.referrer || window.history.length < 2) return;
+          try {
+            if (new URL(document.referrer).origin === window.location.origin) {
+              event.preventDefault();
+              window.history.back();
+            }
+          } catch (error) {
+            // Keep the dashboard link as the safe fallback.
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -1,4 +1,6 @@
 from django import forms
+from math import isfinite
+
 from .models import FoodDiary, MealPlan, NutritionTip
 
 
@@ -144,3 +146,11 @@ class NutritionTipForm(forms.ModelForm):
                 }
             ),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        for field_name in ("protein", "carbs", "fats"):
+            value = cleaned_data.get(field_name)
+            if value is not None and (not isfinite(value) or value < 0):
+                self.add_error(field_name, "Enter a finite, non-negative amount.")
+        return cleaned_data

@@ -3,6 +3,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from ai_coach import views as ai_coach_views
+from usermanagement import views as usermanagement_views
+from usermanagement.forms import PasswordResetSetPasswordForm
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -24,18 +26,12 @@ urlpatterns = [
     path("reports/", include("reports.urls")),
 
     # Forgot Password
-    path(
-        "password-reset/",
-        auth_views.PasswordResetView.as_view(
-            template_name="registration/password_reset.html"
-        ),
-        name="password_reset",
-    ),
+    path("password-reset/", usermanagement_views.password_recovery, name="password_reset"),
 
     path(
         "password-reset/done/",
         auth_views.PasswordResetDoneView.as_view(
-            template_name="registration/password_reset_done.html"
+            template_name="usermanagement/password_reset_done.html"
         ),
         name="password_reset_done",
     ),
@@ -43,7 +39,8 @@ urlpatterns = [
     path(
         "reset/<uidb64>/<token>/",
         auth_views.PasswordResetConfirmView.as_view(
-            template_name="registration/password_reset_confirm.html"
+            template_name="usermanagement/password_reset_confirm.html",
+            form_class=PasswordResetSetPasswordForm,
         ),
         name="password_reset_confirm",
     ),
@@ -51,7 +48,7 @@ urlpatterns = [
     path(
         "reset/done/",
         auth_views.PasswordResetCompleteView.as_view(
-            template_name="registration/password_reset_complete.html"
+            template_name="usermanagement/password_reset_complete.html"
         ),
         name="password_reset_complete",
     ),

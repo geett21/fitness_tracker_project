@@ -8,21 +8,23 @@
 			<div class="card-header bg-white d-flex justify-content-between align-items-center">
 				<div>
 					<h2 class="h5 mb-1">Notifications</h2>
-					<p class="mb-0 text-secondary">Stay updated with your Fitness Tracker activity.</p>
+					<p class="mb-0 text-secondary">Review your water reminder settings and today's progress.</p>
 				</div>
 				<i class="bi bi-bell-fill text-primary fs-3"></i>
 			</div>
 			<div class="list-group list-group-flush">
 				<div class="list-group-item py-3">
 					<div class="d-flex gap-3">
-						<i class="bi bi-check-circle-fill text-success fs-4"></i>
-						<div><h3 class="h6 mb-1">Welcome to Fitness Tracker</h3><p class="mb-0">Your personal fitness dashboard is ready.</p></div>
-					</div>
-				</div>
-				<div class="list-group-item py-3">
-					<div class="d-flex gap-3">
-						<i class="bi bi-lightning-charge-fill text-warning fs-4"></i>
-						<div><h3 class="h6 mb-1">Keep your progress going</h3><p class="mb-0">Log your workouts, water and weight regularly.</p></div>
+						<i class="bi bi-droplet-fill text-info fs-4"></i>
+						<div>
+							<h3 class="h6 mb-1">Water goal: {{ water_reminders.daily_target_liters }} L per day</h3>
+							<p class="mb-1">Today: {{ water_today_total|floatformat:2 }} L logged; {{ water_remaining|floatformat:2 }} L remaining.</p>
+							{% if water_reminders.enabled %}
+							<p class="mb-0">Reminder schedule: {{ water_reminders.get_interval_minutes_display|lower }} from {{ water_reminders.start_time|time:"g:i A" }} to {{ water_reminders.end_time|time:"g:i A" }}.</p>
+							{% else %}
+							<p class="mb-0">Water reminders are currently off.</p>
+							{% endif %}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -34,7 +36,7 @@
 				<i class="bi bi-calendar-check text-primary fs-1 mb-3"></i>
 				<h2 class="h5">Stay consistent</h2>
 				<p class="text-secondary">Small daily actions create lasting results.</p>
-				<a href="{% url 'reports:dashboard' %}" class="btn btn-primary mt-2">View reports</a>
+				<a href="{% url 'water_reminder' %}" class="btn btn-primary mt-2">Set water reminders</a>
 			</div>
 		</div>
 	</div>
