@@ -797,3 +797,10 @@ body,
   outline: 3px solid #f4c95d !important;
   outline-offset: 2px;
 }
+
+/* Give standard card headers a clearer mint-teal tint; semantic headers keep their own colors. */
+.app-content .card-header:not(.bg-primary):not(.bg-success):not(.bg-info):not(.bg-warning):not(.bg-danger) {
+  background: linear-gradient(110deg, #c8ebe5 0%, #e3f4f0 100%) !important;
+  border-bottom-color: #c1dedb !important;
+  color: #16324f !important;
+}
