@@ -747,3 +747,53 @@ body,
 .app-content .card-body h6:not(.text-white) {
   color: var(--fit-ink) !important;
 }
+
+/* Keep status colors distinct so success, information, caution, and errors are easy to scan. */
+.app-content .btn-success,
+.bg-success,
+.text-bg-success {
+  background: #15803d !important;
+  border-color: #15803d !important;
+  color: #ffffff !important;
+}
+
+.app-content .btn-info,
+.bg-info,
+.text-bg-info {
+  background: #075985 !important;
+  border-color: #075985 !important;
+  color: #ffffff !important;
+}
+
+.app-content .btn-warning,
+.bg-warning,
+.text-bg-warning {
+  background: #f4c95d !important;
+  border-color: #f4c95d !important;
+  color: #16324f !important;
+}
+
+.app-content .btn-danger,
+.bg-danger,
+.text-bg-danger {
+  background: #b42318 !important;
+  border-color: #b42318 !important;
+  color: #ffffff !important;
+}
+
+.app-content .btn-outline-success { color: #166534 !important; border-color: #166534 !important; }
+.app-content .btn-outline-info { color: #075985 !important; border-color: #075985 !important; }
+.app-content .btn-outline-warning { color: #854d0e !important; border-color: #a16207 !important; }
+.app-content .btn-outline-danger { color: #b42318 !important; border-color: #b42318 !important; }
+
+.app-content a:not(.btn):not(.nav-link) { color: #0f766e; }
+.app-content a:not(.btn):not(.nav-link):hover { color: #134e4a; }
+
+.app-wrapper a:focus-visible,
+.app-wrapper button:focus-visible,
+.app-wrapper input:focus-visible,
+.app-wrapper select:focus-visible,
+.app-wrapper textarea:focus-visible {
+  outline: 3px solid #f4c95d !important;
+  outline-offset: 2px;
+}
